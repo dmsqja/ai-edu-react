@@ -1,52 +1,83 @@
-import './Home.css';
-
 const Home = () => {
   return (
-    <div className="home">
-      <h1>AI Education Platform</h1>
-      <p className="subtitle">Spring AI 학습 콘텐츠를 React로 재구현</p>
-      
-      <div className="chapters-grid">
-        <div className="chapter-card">
-          <h2>Chapter 1: Chat</h2>
-          <p>채팅 기능 구현</p>
-        </div>
-        <div className="chapter-card">
-          <h2>Chapter 2: Prompt Template</h2>
-          <p>프롬프트 템플릿</p>
-        </div>
-        <div className="chapter-card">
-          <h2>Chapter 3: Advisors</h2>
-          <p>어드바이저 패턴</p>
-        </div>
-        <div className="chapter-card">
-          <h2>Chapter 4: Multimodality</h2>
-          <p>멀티모달 처리</p>
-        </div>
-        <div className="chapter-card">
-          <h2>Chapter 5: Speech</h2>
-          <p>음성 처리</p>
-        </div>
-        <div className="chapter-card">
-          <h2>Chapter 6: Tools</h2>
-          <p>도구/함수 호출</p>
-        </div>
-        <div className="chapter-card">
-          <h2>Chapter 7: Embedding</h2>
-          <p>임베딩</p>
-        </div>
-        <div className="chapter-card">
-          <h2>Chapter 8: RAG</h2>
-          <p>Retrieval Augmented Generation</p>
-        </div>
-        <div className="chapter-card">
-          <h2>Chapter 9: MCP</h2>
-          <p>Model Context Protocol</p>
-        </div>
-      </div>
-    </div>
+    <>
+      <h2>Spring AI</h2>
+      <br />
+      <h6>
+        Spring AI는 AI 엔지니어링을 위한 애플리케이션 프레임워크입니다. Spring AI의 목표는 이식성 및 모듈형 설계와 같은 Spring 생태계 설계 원칙을 AI 도메인에 적용하고, POJO를 AI 도메인 애플리케이션의 구성 요소로 사용하도록 장려하는 것입니다.
+      </h6>
+      <h6>
+        Spring AI의 핵심은 AI 통합의 근본적인 과제, 즉 기업 데이터 와 API를 AI 모델 에 연결하는 것입니다 .
+      </h6>
+      <p>
+        Spring AI는 본질적으로 다양한 AI 제공업체와 협력하기 위한 클라이언트 추상화입니다. LLM과의 쉬운 상호작용을 간소화하고, 더 복잡한 사용도 비교적 쉽게 만들어줍니다. 또한 모든 AI 제공업체와 해당 모델에서 일관된 인터페이스를 제공하여, OpenAI, Anthropic, Meta, MistralAI, Google Gemini 등 어떤 모델을 사용하든 작성한 코드를 이식성 있게 사용할 수 있도록 지원합니다.
+      </p>
+      <p>
+        Spring AI를 기반으로 구축된 애플리케이션은 지원되는 여러 AI 제공업체 중 한 곳의 LLM에 생성을 위한 프롬프트를 제출할 수 있습니다.생성된 응답은 애플리케이션으로 반환되어 원하는 작업을 처리합니다. 내부적으로 Spring AI가 프롬프트 요청을 전송하고 응답을 처리하는 모든 복잡한 작업을 처리하므로 애플리케이션은 직접 처리할 필요가 없습니다.
+      </p>
+      <img src="/imgs/springai.png" width="600px" alt="Spring AI" />
+      <br />
+      <a href="https://docs.spring.io/spring-ai/reference/index.html">출처:docs.springai.io</a>
+      <br />
+      <br />
+      <p>프롬프트 자체에는 LLM이 응답을 생성해야 하는 자연어 텍스트가 포함됩니다. 일반적인 프롬프트 유형은 다음과 같습니다.</p>
+      <img src="/imgs/springai2.png" width="600px" alt="Spring AI 2" />
+      <br />
+      <a href="https://docs.spring.io/spring-ai/reference/index.html">출처:docs.springai.io</a>
+      <br />
+      <br />
+      <ul>
+        <li>대답해야 할 질문</li>
+        <li>감정을 파악하기 위한 메시지(예: 메시지가 긍정적인가, 부정적인가?)</li>
+        <li>요약할 문서</li>
+        <li>일부 콘텐츠는 검토가 필요합니다.</li>
+        <li>분류할 텍스트(예: 감정 분석)</li>
+        <li>생성할 이미지에 대한 설명</li>
+      </ul>
+      <p>
+        Spring AI는 놀라운 생성 AI 기술을 구현하는 데 도움을 줄 수 있으며, 이 책을 통해 그 기술을 익히게 될 것입니다. 하지만 어딘가에서는 시작이 필요합니다. OpenAI 서비스를 사용하여 질문에 답하는 매우 간단한 REST 서비스를 작성하는 것으로 Spring AI 여정을 시작해 보겠습니다.
+      </p>
+      <p>Spring AI는 다양한 AI 서비스와의 연동을 제공합니다.</p>
+      <ul>
+        <li>Amazon Bedrock - Claude, Llama, Mistral, Titan 등의 모델을 갖춘 Amazon 클라우드 플랫폼을 통해 제공되는 AI 서비스입니다.</li>
+        <li>Anthropic — OpenAI의 전 멤버가 설립한 AI 서비스로, Claude 계열의 모델을 제공합니다.</li>
+        <li>Azure OpenAI — 기본적으로 OpenAI와 동일한 모델 세트이지만 Microsoft의 Azure 컴퓨팅 플랫폼을 통해 제공됩니다.</li>
+        <li>Google AI - Google의 클라우드 플랫폼을 통해 제공되는 AI 서비스로, Google의 Gemini 모델도 포함됩니다.</li>
+        <li>Hugging Face — 30만 개 이상의 모델을 선택할 수 있는 저장소를 제공합니다. Spring AI와 Hugging Face의 통합은 Hugging Face의 클라우드 기반 API와 함께 작동합니다.</li>
+        <li>MiniMax 는 다국어 모델을 포함한 여러 모델을 제공하는 중국 AI 서비스입니다.</li>
+        <li>MistralAI 는 Meta와 Google의 전직 직원이 설립한 AI 회사로, 인기 있는 Mistral 7B 모델을 포함하여 매우 유능한 LLM을 여러 개 제공합니다.</li>
+        <li>Ollama — 클라우드 기반 서비스에서 제공하는 여러 인기 모델을 포함하여 여러 오픈 소스 모델을 사용자의 하드웨어에서 무료로 로컬로 실행할 수 있는 옵션입니다.</li>
+      </ul>
+      <br />
+      <p>Spring AI는 다음과 같은 기능을 제공합니다.</p>
+      <ul>
+        <li>Anthropic, OpenAI, Microsoft, Amazon, Google, Ollama 등 모든 주요 AI 모델 공급업체를 지원합니다. 지원되는 모델 유형은 다음과 같습니다.</li>
+        <ol>
+          <li>Chat Completion</li>
+          <li>Embedding</li>
+          <li>Text to Image</li>
+          <li>Audio Transcription</li>
+          <li>Text to Speech</li>
+          <li>Moderation</li>
+        </ol>
+        <li>동기식 및 스트리밍 API 옵션 모두에 대해 AI 제공업체 간 이식 가능한 API 지원이 제공됩니다. 모델별 기능 에 대한 액세스 도 제공됩니다.</li>
+        <li>Structured Outputs - AI 모델 출력을 POJO에 매핑합니다.</li>
+        <li>Apache Cassandra, Azure Vector Search, Chroma, Milvus, MongoDB Atlas, Neo4j, Oracle, PostgreSQL/PGVector, PineCone, Qdrant, Redis, Weaviate 등 모든 주요 벡터 데이터베이스 공급자를 지원합니다 .</li>
+        <li>새로운 SQL 유사 메타데이터 필터 API를 포함하여 Vector Store 공급자 전반의 이식 가능한 API입니다 .</li>
+        <li>Tools/Function Calling - 모델이 클라이언트 측 도구 및 기능의 실행을 요청하여 필요에 따라 필요한 실시간 정보에 액세스할 수 있도록 합니다.</li>
+        <li>Observability - AI 관련 작업에 대한 통찰력을 제공합니다.</li>
+        <li>데이터 엔지니어링을 위한 문서 주입 ETL 프레임워크 .</li>
+        <li>AI Model Evaluation  - 생성된 콘텐츠를 평가하고 환각 반응으로부터 보호하는 데 도움이 되는 유틸리티입니다.</li>
+        <li>ChatClient API - AI 채팅 모델과 통신하기 위한 Fluent API로, WebClient 및 RestClient API와 관용적으로 유사합니다.</li>
+        <li>Advisors API - 반복적인 생성 AI 패턴을 캡슐화하고, 언어 모델(LLM)과 주고받는 데이터를 변환하고, 다양한 모델과 사용 사례에 대한 이식성을 제공합니다.</li>
+        <li>Chat Conversation Memory and Retrieval Augmented Generation (RAG).</li>
+        <li>모든 AI 모델과 벡터 저장소를 위한 Spring Boot 자동 구성 및 스타일러 - start.spring.io 를 사용하여 원하는 모델이나 벡터 저장소를 선택하세요.</li>
+      </ul>
+      <a href="https://docs.spring.io/spring-ai/reference/index.html">출처:docs.springai.io</a>
+      <br />
+      <br />
+    </>
   );
 };
 
 export default Home;
-

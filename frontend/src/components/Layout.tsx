@@ -1,54 +1,113 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import './Layout.css';
+import Sidebar from './Sidebar';
 
 const Layout = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const chapters = [
-    { id: 'ch1', name: 'Chapter 1: Chat', path: '/ch1' },
-    { id: 'ch2', name: 'Chapter 2: Prompt Template', path: '/ch2' },
-    { id: 'ch3', name: 'Chapter 3: Advisors', path: '/ch3' },
-    { id: 'ch4', name: 'Chapter 4: Multimodality', path: '/ch4' },
-    { id: 'ch5', name: 'Chapter 5: Speech', path: '/ch5' },
-    { id: 'ch6', name: 'Chapter 6: Tools', path: '/ch6' },
-    { id: 'ch7', name: 'Chapter 7: Embedding', path: '/ch7' },
-    { id: 'ch8', name: 'Chapter 8: RAG', path: '/ch8' },
-    { id: 'ch9', name: 'Chapter 9: MCP', path: '/ch9' },
-  ];
+  // 현재 챕터 ID 추출 (예: /ch1/desc -> ch1)
+  const getCurrentChapter = () => {
+    const match = currentPath.match(/^\/(ch\d+)/);
+    return match ? match[1] : null;
+  };
+
+  const currentChapter = getCurrentChapter();
 
   return (
-    <div className="layout">
-      <aside className="sidebar">
-        <div className="sidebar-header">
-          <Link to="/" className="logo">
-            <h1>AI Education</h1>
+    <>
+      {/* Jumbotron Header */}
+      <div className="jumbotron text-center" style={{ marginBottom: 0 }}>
+        <h1>Spring AI Project</h1>
+      </div>
+
+      {/* Top Navigation */}
+      <ul className="nav justify-content-end">
+        <li className="nav-item">
+          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/postgresql">
+            PostgreSQL
           </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/springai">
+            SpringAi
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/openai">
+            OpenAi
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/gemini">
+            Gemini
+          </Link>
+        </li>
+      </ul>
+
+      {/* Bootstrap Navbar */}
+      <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+        <Link className="navbar-brand" to="/">Home</Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapsibleNavbar"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul className="navbar-nav" style={{ fontWeight: 'bold' }}>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ch1">chapter1</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ch2">chapter2</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ch3">chapter3</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ch4">chapter4</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ch5">chapter5</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ch6">chapter6</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ch7">chapter7</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ch8">chapter8</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ch9">chapter9</Link>
+            </li>
+          </ul>
         </div>
-        <nav className="sidebar-nav">
-          <Link 
-            to="/" 
-            className={`nav-item ${currentPath === '/' ? 'active' : ''}`}
-          >
-            메인
-          </Link>
-          {chapters.map((chapter) => (
-            <Link
-              key={chapter.id}
-              to={chapter.path}
-              className={`nav-item ${currentPath.startsWith(chapter.path) ? 'active' : ''}`}
-            >
-              {chapter.name}
-            </Link>
-          ))}
-        </nav>
-      </aside>
-      <main className="content">
-        <Outlet />
-      </main>
-    </div>
+      </nav>
+
+      {/* Main Content Area */}
+      <div className="container-fluid" style={{ marginTop: '30px' }}>
+        <div className="row">
+          {/* Sidebar */}
+          <div className="col-sm-2">
+            <Sidebar currentPage={currentChapter || (currentPath === '/' ? 'main' : null)} />
+          </div>
+          {/* Main Content */}
+          <div className="col-sm-10">
+            <Outlet />
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="text-center bg-dark" style={{ marginBottom: 0 }}>
+        <p>Footer</p>
+      </div>
+    </>
   );
 };
 
 export default Layout;
-
