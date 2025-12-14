@@ -1,0 +1,22 @@
+server:
+  port: 80
+spring:
+  application:
+    name: project
+
+  profiles:
+    active: local
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+  web:
+    resources:
+      static-locations: classpath:/static/
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true

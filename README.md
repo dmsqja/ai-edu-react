@@ -38,11 +38,14 @@ Spring Boot + Thymeleaf 기반 AI 교육 플랫폼을 React로 전환하는 프�
 ./run_edu.sh
 ```
 
-### React 프로젝트 (준비 중)
+### React 프로젝트
 ```bash
+cd frontend
 npm install
-npm start
+npm run dev
 ```
+
+프로젝트는 `http://localhost:5173`에서 실행됩니다.
 
 ## 프로젝트 구조
 
@@ -61,10 +64,18 @@ npm start
 ## 진행 상황
 
 - [x] GitHub 리포지토리 생성
-- [ ] React 프로젝트 초기화
-- [ ] 컴포넌트 구조 설계
-- [ ] API 연동
+- [x] React 프로젝트 초기화
+- [x] 컴포넌트 구조 설계
+- [ ] 프론트엔드 UI 구현 (진행 중)
+- [ ] API 연동 (백엔드 구현 후 예정)
 - [ ] 각 챕터별 구현
+
+## 주의사항
+
+⚠️ **현재는 프론트엔드 UI만 구현 중입니다.**
+- 백엔드 API는 아직 구현되지 않았습니다.
+- API 연동은 백엔드 구현 후 진행 예정입니다.
+- API 엔드포인트 목록은 `frontend/API_TODO.md`를 참고하세요.
 
 ## 라이선스
 
