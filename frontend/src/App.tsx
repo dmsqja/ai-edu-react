@@ -20,6 +20,12 @@ import GenerateImageUrl from './pages/ch4/GenerateImageUrl';
 import GenerateImage from './pages/ch4/GenerateImage';
 import ImageAnalysis from './pages/ch4/ImageAnalysis';
 import VideoAnalysis from './pages/ch4/VideoAnalysis';
+import TextToSpeech from './pages/ch5/TextToSpeech';
+import TextToSpeechChat from './pages/ch5/TextToSpeechChat';
+import TextToSpeechChatStream from './pages/ch5/TextToSpeechChatStream';
+import SpeechToText from './pages/ch5/SpeechToText';
+import SpeechToTextChat from './pages/ch5/SpeechToTextChat';
+import SpeechToTextChatVoice from './pages/ch5/SpeechToTextChatVoice';
 import './App.css';
 
 function App() {
@@ -51,6 +57,13 @@ function App() {
             <Route path="2_generate_image" element={<GenerateImage />} />
             <Route path="3_image_analysis" element={<ImageAnalysis />} />
             <Route path="4_video_analysis" element={<VideoAnalysis />} />
+            {/* Chapter 5 */}
+            <Route path="1_text_to_speech" element={<TextToSpeech />} />
+            <Route path="2_text_to_speech_chat" element={<TextToSpeechChat />} />
+            <Route path="3_text_to_speech_chat_stream" element={<TextToSpeechChatStream />} />
+            <Route path="4_speech_to_text" element={<SpeechToText />} />
+            <Route path="5_speech_to_text_chat" element={<SpeechToTextChat />} />
+            <Route path="6_speech_to_text_chat_voice" element={<SpeechToTextChatVoice />} />
             {/* 다른 챕터의 세부 페이지는 여기에 추가 */}
           </Route>
         </Route>
