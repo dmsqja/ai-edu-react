@@ -16,6 +16,10 @@ import ParameterizedTypeReference from './pages/ch2/ParameterizedTypeReference';
 import Advisor from './pages/ch3/Advisor';
 import AdvisorStream from './pages/ch3/AdvisorStream';
 import RecursiveAdvisors from './pages/ch3/RecursiveAdvisors';
+import GenerateImageUrl from './pages/ch4/GenerateImageUrl';
+import GenerateImage from './pages/ch4/GenerateImage';
+import ImageAnalysis from './pages/ch4/ImageAnalysis';
+import VideoAnalysis from './pages/ch4/VideoAnalysis';
 import './App.css';
 
 function App() {
@@ -42,6 +46,11 @@ function App() {
             <Route path="1_advisor" element={<Advisor />} />
             <Route path="2_advisor_stream" element={<AdvisorStream />} />
             <Route path="3_recursive_advisors" element={<RecursiveAdvisors />} />
+            {/* Chapter 4 */}
+            <Route path="1_generate_image_url" element={<GenerateImageUrl />} />
+            <Route path="2_generate_image" element={<GenerateImage />} />
+            <Route path="3_image_analysis" element={<ImageAnalysis />} />
+            <Route path="4_video_analysis" element={<VideoAnalysis />} />
             {/* 다른 챕터의 세부 페이지는 여기에 추가 */}
           </Route>
         </Route>
