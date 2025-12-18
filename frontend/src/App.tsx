@@ -13,6 +13,9 @@ import ListOutput from './pages/ch2/ListOutput';
 import MapOutput from './pages/ch2/MapOutput';
 import BeanOutput from './pages/ch2/BeanOutput';
 import ParameterizedTypeReference from './pages/ch2/ParameterizedTypeReference';
+import Advisor from './pages/ch3/Advisor';
+import AdvisorStream from './pages/ch3/AdvisorStream';
+import RecursiveAdvisors from './pages/ch3/RecursiveAdvisors';
 import './App.css';
 
 function App() {
@@ -35,6 +38,10 @@ function App() {
             <Route path="3_map_output" element={<MapOutput />} />
             <Route path="4_bean_output" element={<BeanOutput />} />
             <Route path="5_parameterized_type_reference" element={<ParameterizedTypeReference />} />
+            {/* Chapter 3 */}
+            <Route path="1_advisor" element={<Advisor />} />
+            <Route path="2_advisor_stream" element={<AdvisorStream />} />
+            <Route path="3_recursive_advisors" element={<RecursiveAdvisors />} />
             {/* 다른 챕터의 세부 페이지는 여기에 추가 */}
           </Route>
         </Route>
