@@ -9,6 +9,7 @@ import Chapter3Fragment from './pages/ch3/Chapter3Fragment';
 import Chapter4Fragment from './pages/ch4/Chapter4Fragment';
 import Chapter5Fragment from './pages/ch5/Chapter5Fragment';
 import Chapter6Fragment from './pages/ch6/Chapter6Fragment';
+import Chapter7Fragment from './pages/ch7/Chapter7Fragment';
 import Chat from './pages/ch1/Chat';
 import ChatStream from './pages/ch1/ChatStream';
 import ChatFewShot from './pages/ch1/ChatFewShot';
@@ -36,6 +37,10 @@ import DateTime from './pages/ch6/DateTime';
 import CustomerInquiry from './pages/ch6/CustomerInquiry';
 import Recommendation from './pages/ch6/Recommendation';
 import AccessSystem from './pages/ch6/AccessSystem';
+import TextEmbedding from './pages/ch7/TextEmbedding';
+import HotelEmbedding from './pages/ch7/HotelEmbedding';
+import ChatPgvector from './pages/ch7/ChatPgvector';
+import ChatJdbc from './pages/ch7/ChatJdbc';
 import './App.css';
 
 function App() {
@@ -79,6 +84,11 @@ function App() {
             <Route path="2_customer_inquiry" element={<CustomerInquiry />} />
             <Route path="3_recommendation" element={<Recommendation />} />
             <Route path="4_access_system" element={<AccessSystem />} />
+            {/* Chapter 7 */}
+            <Route path="1_text_embedding" element={<TextEmbedding />} />
+            <Route path="2_hotel_embedding" element={<HotelEmbedding />} />
+            <Route path="3_chat_pgvector" element={<ChatPgvector />} />
+            <Route path="4_chat_jdbc" element={<ChatJdbc />} />
             {/* 다른 챕터의 세부 페이지는 여기에 추가 */}
           </Route>
         </Route>

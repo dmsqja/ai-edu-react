@@ -196,6 +196,55 @@ const ChapterDesc = () => {
         },
       ],
     },
+    ch7: {
+      title: '7. Embedding Model',
+      items: [
+        {
+          name: '1. Text Embedding',
+          description: (
+            <>
+              사전에 준비된 텍스트 데이터를 Embedding 모델을 통해 고차원 벡터(Vector Representation) 로 변환하고,
+              <br />
+              변환된 벡터를 Vector Store에 저장한 뒤,
+              <br />
+              사용자의 질문을 Embedding하여 유사도 검색(Semantic Search)으로 관련 문서를 조회하는 방식입니다.
+            </>
+          ),
+        },
+        {
+          name: '2. Hotel Data Embedding',
+          description: (
+            <>
+              호텔 이름, 위치, 편의시설, 가격, 리뷰 등 호텔 관련 멀티필드 데이터를 Embedding하여
+              <br />
+              Vector Store에 저장한 뒤,
+              <br />
+              사용자의 검색 요구(예: "호텔 입실 시간은")에 대해 의미 기반 검색을 수행합니다.
+            </>
+          ),
+        },
+        {
+          name: '3. Chat Memory PGvector',
+          description: (
+            <>
+              사용자와 LLM의 대화 내역을 실시간 Embedding하여 PGVector(PostgreSQL Vector Extension)에 저장하고,
+              <br />
+              후속 대화에서 유사한 이전 대화를 검색해 콘텍스트로 활용하는 방식입니다.
+            </>
+          ),
+        },
+        {
+          name: '4. Chat Memory JDBC',
+          description: (
+            <>
+              사용자와 LLM의 대화 흐름을 관계형 데이터베이스(JDBC) 기반으로 저장하는 방식입니다.
+              <br />
+              Embedding 없이 텍스트 그대로 저장하여 대화 이력 관리가 필요한 경우에 사용합니다.
+            </>
+          ),
+        },
+      ],
+    },
   };
 
   const data = chapterData[chapterId || ''] || {
