@@ -8,6 +8,7 @@ import Chapter2Fragment from './pages/ch2/Chapter2Fragment';
 import Chapter3Fragment from './pages/ch3/Chapter3Fragment';
 import Chapter4Fragment from './pages/ch4/Chapter4Fragment';
 import Chapter5Fragment from './pages/ch5/Chapter5Fragment';
+import Chapter6Fragment from './pages/ch6/Chapter6Fragment';
 import Chat from './pages/ch1/Chat';
 import ChatStream from './pages/ch1/ChatStream';
 import ChatFewShot from './pages/ch1/ChatFewShot';
@@ -31,6 +32,10 @@ import TextToSpeechChatStream from './pages/ch5/TextToSpeechChatStream';
 import SpeechToText from './pages/ch5/SpeechToText';
 import SpeechToTextChat from './pages/ch5/SpeechToTextChat';
 import SpeechToTextChatVoice from './pages/ch5/SpeechToTextChatVoice';
+import DateTime from './pages/ch6/DateTime';
+import CustomerInquiry from './pages/ch6/CustomerInquiry';
+import Recommendation from './pages/ch6/Recommendation';
+import AccessSystem from './pages/ch6/AccessSystem';
 import './App.css';
 
 function App() {
@@ -69,6 +74,11 @@ function App() {
             <Route path="4_speech_to_text" element={<SpeechToText />} />
             <Route path="5_speech_to_text_chat" element={<SpeechToTextChat />} />
             <Route path="6_speech_to_text_chat_voice" element={<SpeechToTextChatVoice />} />
+            {/* Chapter 6 */}
+            <Route path="1_date_time" element={<DateTime />} />
+            <Route path="2_customer_inquiry" element={<CustomerInquiry />} />
+            <Route path="3_recommendation" element={<Recommendation />} />
+            <Route path="4_access_system" element={<AccessSystem />} />
             {/* 다른 챕터의 세부 페이지는 여기에 추가 */}
           </Route>
         </Route>

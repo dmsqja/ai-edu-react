@@ -4,6 +4,7 @@ import Chapter2Fragment from './ch2/Chapter2Fragment';
 import Chapter3Fragment from './ch3/Chapter3Fragment';
 import Chapter4Fragment from './ch4/Chapter4Fragment';
 import Chapter5Fragment from './ch5/Chapter5Fragment';
+import Chapter6Fragment from './ch6/Chapter6Fragment';
 
 const Chapter = () => {
   const { chapterId } = useParams<{ chapterId: string }>();
@@ -16,6 +17,7 @@ const Chapter = () => {
     ch3: Chapter3Fragment,
     ch4: Chapter4Fragment,
     ch5: Chapter5Fragment,
+    ch6: Chapter6Fragment,
   };
 
   const FragmentComponent = chapterId ? fragmentComponents[chapterId] : null;
