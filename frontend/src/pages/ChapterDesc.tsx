@@ -245,6 +245,86 @@ const ChapterDesc = () => {
         },
       ],
     },
+    ch8: {
+      title: '8. RAG(Retrieval-Augmented Generation)',
+      items: [
+        {
+          name: '1. ETL Pipeline',
+          description: (
+            <>
+              사용자가 업로드한 파일(TXT, PDF, DOC 등)을 처리하여 Vector Store에 저장하거나 삭제하는 기능입니다.
+              <br />
+              각 파일의 타입을 지정하여 데이터 구분 및 관리가 가능합니다.
+            </>
+          ),
+        },
+        {
+          name: '2. RAG Chat',
+          description: (
+            <>
+              Vector Store에 저장된 데이터 기반으로 LLM과 대화하며,
+              <br />
+              QuestionAnswerAdvisor를 활용하여 RAG(Retrieval-Augmented Generation) 기반 질문 응답을 수행합니다.
+            </>
+          ),
+        },
+        {
+          name: '3. RAG Chat: template',
+          description: (
+            <>
+              RAG Chat 기능에 PromptTemplate을 적용하여,
+              <br />
+              검색된 문서를 기반으로 LLM이 생성한 답변을 지정된 형식으로 가공하여 전달합니다.
+            </>
+          ),
+        },
+        {
+          name: '4. Retrieval Augmentation Advisor',
+          description: (
+            <>
+              RetrievalAugmentationAdvisor를 사용하여,
+              <br />
+              Vector Store에 정확한 검색 결과가 없어도 LLM이 유연하게 대화를 이어갈 수 있도록 지원합니다.
+            </>
+          ),
+        },
+        {
+          name: '5. Compression Query Transformer',
+          description: (
+            <>
+              CompressionQueryTransformer는 대화 기록과 후속 질문을 압축하여
+              <br />
+              대화 핵심을 포착한 독립적인 쿼리로 재구성한 후 LLM과 대화할 수 있도록 합니다.
+            </>
+          ),
+        },
+        {
+          name: '6. Rewrite Query Transformer',
+          description: (
+            <>
+              RewriteQueryTransformer는 사용자의 질문이 장황하거나 모호할 때,
+              <br />
+              질문을 명확하게 재작성하여 LLM이 정확히 이해하고 응답할 수 있도록 합니다.
+            </>
+          ),
+        },
+        {
+          name: '7. Translation Query Transformer',
+          description:
+            'TranslationQueryTransformer는 사용자의 질문을 특정 언어로 번역하여(입력 언어 → 지정 언어로 자동 변환) LLM과 다국어 대화를 가능하게 하는 기능입니다.',
+        },
+        {
+          name: '8. Multi Query Expander',
+          description: (
+            <>
+              MultiQueryExpander는 사용자의 질문을 다양한 변형(Query Expansion)으로 만들어
+              <br />
+              LLM과 대화할 수 있도록 확장하는 기능입니다.
+            </>
+          ),
+        },
+      ],
+    },
   };
 
   const data = chapterData[chapterId || ''] || {

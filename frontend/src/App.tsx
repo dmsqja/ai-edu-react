@@ -10,6 +10,7 @@ import Chapter4Fragment from './pages/ch4/Chapter4Fragment';
 import Chapter5Fragment from './pages/ch5/Chapter5Fragment';
 import Chapter6Fragment from './pages/ch6/Chapter6Fragment';
 import Chapter7Fragment from './pages/ch7/Chapter7Fragment';
+import Chapter8Fragment from './pages/ch8/Chapter8Fragment';
 import Chat from './pages/ch1/Chat';
 import ChatStream from './pages/ch1/ChatStream';
 import ChatFewShot from './pages/ch1/ChatFewShot';
@@ -41,6 +42,14 @@ import TextEmbedding from './pages/ch7/TextEmbedding';
 import HotelEmbedding from './pages/ch7/HotelEmbedding';
 import ChatPgvector from './pages/ch7/ChatPgvector';
 import ChatJdbc from './pages/ch7/ChatJdbc';
+import EtlPipeline from './pages/ch8/EtlPipeline';
+import RagChat from './pages/ch8/RagChat';
+import RagChatPromptTemplate from './pages/ch8/RagChatPromptTemplate';
+import RaaRagChat from './pages/ch8/RaaRagChat';
+import CqtRagChat from './pages/ch8/CqtRagChat';
+import RqtRagChat from './pages/ch8/RqtRagChat';
+import TqtRagChat from './pages/ch8/TqtRagChat';
+import MqeRagChat from './pages/ch8/MqeRagChat';
 import './App.css';
 
 function App() {
@@ -89,6 +98,15 @@ function App() {
             <Route path="2_hotel_embedding" element={<HotelEmbedding />} />
             <Route path="3_chat_pgvector" element={<ChatPgvector />} />
             <Route path="4_chat_jdbc" element={<ChatJdbc />} />
+            {/* Chapter 8 */}
+            <Route path="1_etl_pipeline" element={<EtlPipeline />} />
+            <Route path="2_rag_chat" element={<RagChat />} />
+            <Route path="3_rag_chat_prompt_template" element={<RagChatPromptTemplate />} />
+            <Route path="4_raa_rag_chat" element={<RaaRagChat />} />
+            <Route path="5_cqt_rag_chat" element={<CqtRagChat />} />
+            <Route path="6_rqt_rag_chat" element={<RqtRagChat />} />
+            <Route path="7_tqt_rag_chat" element={<TqtRagChat />} />
+            <Route path="8_mqe_rag_chat" element={<MqeRagChat />} />
             {/* 다른 챕터의 세부 페이지는 여기에 추가 */}
           </Route>
         </Route>
