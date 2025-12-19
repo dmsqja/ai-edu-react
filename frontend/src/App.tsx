@@ -3,6 +3,11 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Chapter from './pages/Chapter';
 import ChapterDesc from './pages/ChapterDesc';
+import Chapter1Fragment from './pages/ch1/Chapter1Fragment';
+import Chapter2Fragment from './pages/ch2/Chapter2Fragment';
+import Chapter3Fragment from './pages/ch3/Chapter3Fragment';
+import Chapter4Fragment from './pages/ch4/Chapter4Fragment';
+import Chapter5Fragment from './pages/ch5/Chapter5Fragment';
 import Chat from './pages/ch1/Chat';
 import ChatStream from './pages/ch1/ChatStream';
 import ChatFewShot from './pages/ch1/ChatFewShot';
@@ -35,7 +40,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path=":chapterId" element={<Chapter />}>
-            <Route index element={<ChapterDesc />} />
+            <Route path="desc" element={<ChapterDesc />} />
             {/* Chapter 1 */}
             <Route path="1_chat" element={<Chat />} />
             <Route path="2_chat_stream" element={<ChatStream />} />
