@@ -35,12 +35,10 @@ Spring Boot + Thymeleaf 기반 AI 교육 플랫폼을 React로 전환하는 프�
 
 ### Spring Boot 프로젝트 실행
 ```bash
-# 방법 1: 최신 소스에서 빌드 후 실행
 ./run_edu_latest.sh
-
-# 방법 2: 이미 빌드된 JAR 파일 실행
-./run_edu.sh
 ```
+
+이 스크립트는 `edu/` 디렉토리에서 최신 소스를 빌드하고 실행합니다.
 
 ### React 프로젝트
 ```bash
