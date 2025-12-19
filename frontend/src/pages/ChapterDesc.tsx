@@ -1,10 +1,11 @@
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 const ChapterDesc = () => {
   const { chapterId } = useParams<{ chapterId: string }>();
 
   // 각 챕터별 설명 데이터 (edu의 desc.html 참고)
-  const chapterData: Record<string, { title: string; items: { name: string; description: string | JSX.Element }[] }> = {
+  const chapterData: Record<string, { title: string; items: { name: string; description: string | React.JSX.Element }[] }> = {
     ch1: {
       title: '1. Chat Completion',
       items: [

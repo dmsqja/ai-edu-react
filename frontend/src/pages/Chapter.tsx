@@ -1,3 +1,4 @@
+import React from 'react';
 import { Outlet, useParams, useLocation } from 'react-router-dom';
 import Chapter1Fragment from './ch1/Chapter1Fragment';
 import Chapter2Fragment from './ch2/Chapter2Fragment';
@@ -13,7 +14,7 @@ const Chapter = () => {
   const location = useLocation();
 
   // 챕터별 fragments 컴포넌트 매핑
-  const fragmentComponents: Record<string, () => JSX.Element> = {
+  const fragmentComponents: Record<string, () => React.JSX.Element> = {
     ch1: Chapter1Fragment,
     ch2: Chapter2Fragment,
     ch3: Chapter3Fragment,
