@@ -11,6 +11,7 @@ import Chapter5Fragment from './pages/ch5/Chapter5Fragment';
 import Chapter6Fragment from './pages/ch6/Chapter6Fragment';
 import Chapter7Fragment from './pages/ch7/Chapter7Fragment';
 import Chapter8Fragment from './pages/ch8/Chapter8Fragment';
+import Chapter9Fragment from './pages/ch9/Chapter9Fragment';
 import Chat from './pages/ch1/Chat';
 import ChatStream from './pages/ch1/ChatStream';
 import ChatFewShot from './pages/ch1/ChatFewShot';
@@ -50,6 +51,8 @@ import CqtRagChat from './pages/ch8/CqtRagChat';
 import RqtRagChat from './pages/ch8/RqtRagChat';
 import TqtRagChat from './pages/ch8/TqtRagChat';
 import MqeRagChat from './pages/ch8/MqeRagChat';
+import McpWebmvcChat from './pages/ch9/McpWebmvcChat';
+import McpWebmvcChatStream from './pages/ch9/McpWebmvcChatStream';
 import './App.css';
 
 function App() {
@@ -107,6 +110,9 @@ function App() {
             <Route path="6_rqt_rag_chat" element={<RqtRagChat />} />
             <Route path="7_tqt_rag_chat" element={<TqtRagChat />} />
             <Route path="8_mqe_rag_chat" element={<MqeRagChat />} />
+            {/* Chapter 9 */}
+            <Route path="1_mcp_webmvc_chat" element={<McpWebmvcChat />} />
+            <Route path="2_mcp_webmvc_chat_stream" element={<McpWebmvcChatStream />} />
             {/* 다른 챕터의 세부 페이지는 여기에 추가 */}
           </Route>
         </Route>

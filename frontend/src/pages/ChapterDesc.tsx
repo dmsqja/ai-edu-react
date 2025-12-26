@@ -326,6 +326,37 @@ const ChapterDesc = () => {
         },
       ],
     },
+    ch9: {
+      title: '9. MCP(Model Context Protocol)',
+      items: [
+        {
+          name: '1. MVC Chat',
+          description: (
+            <>
+              사용자의 질문을 다양한 MCP(Multi-Channel Processing) 서버와 연동하여 LLM과 대화할 수 있도록 지원하는 기능입니다.
+              <br />
+              기술 특징
+              <br />
+              사용자 요청 → MCP 서버 → LLM 전달 → 응답 수신
+              <br />
+              여러 채널/서버와 연동 가능 → 분산 처리 환경에 적합
+              <br />
+              Spring MVC 기반 Web/REST 컨트롤러와 자연스럽게 통합
+              <br />
+              대규모 멀티채널 챗봇, 고객지원 시스템에 활용
+            </>
+          ),
+        },
+        {
+          name: '2. MVC Chat Stream',
+          description: 'Moe',
+        },
+        {
+          name: '3. Semi Project',
+          description: 'Dooley',
+        },
+      ],
+    },
   };
 
   const data = chapterData[chapterId || ''] || {

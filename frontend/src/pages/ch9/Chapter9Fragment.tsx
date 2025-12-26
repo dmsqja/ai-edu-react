@@ -1,0 +1,331 @@
+const Chapter9Fragment = () => {
+  return (
+    <>
+      <h1>Chapter 9. MCP (Model Context Protocol)</h1>
+      <br />
+
+      <h2>1. MCP(Model Context Protocol)</h2>
+      <a href="https://modelcontextprotocol.io/docs/getting-started/intro">출처:Model Context Protocol</a>
+
+      <p>
+        <strong>Model Context Protocol(MCP)</strong>은 AI 모델이 외부 도구·데이터·리소스와 구조화된 방식으로 상호작용할 수 있게 해주는 표준화된 프로토콜입니다.
+        모델과 현실 세계(데이터베이스, API, 파일 시스템 등)를 연결하는 통합 인터페이스 역할을 하며, 다양한 전송 메커니즘을 지원해 유연한 통신 패턴을 제공합니다.
+      </p>
+
+      <p>
+        MCP는 2024년 11월에 공개된 이후 빠르게 주목받았으며, 2025년 초를 기점으로 생태계에서 널리 채택되고 있습니다.
+        MCP Java SDK는 동기/비동기 통신 패턴을 모두 지원하는 Java 구현체를 제공하여, AI 모델과 도구 간의 표준화된 상호작용을 쉽게 구성할 수 있게 합니다.
+      </p>
+
+      <p>
+        Spring AI는 MCP 전용 부트 스타터와 Java 어노테이션을 통해 MCP를 정밀히 지원합니다. 이를 통해 Spring 개발자는 MCP 서버를 호스트하거나 MCP 클라이언트로서 외부 모델과 연동하는 애플리케이션을 손쉽게 구축할 수 있습니다.
+      </p>
+      <p>
+        'Context 정보'란 특정 대상(정보, 데이터, 애플리케이션 등)을 더 잘 이해하고 활용하기 위해 필요한 주변 상황, 맥락, 환경적 정보를 의미하며, 단순 데이터 이상의 '정보의 정보' 또는 '상황 정보'로, AI, 프로그래밍, 컴퓨팅 등 다양한 분야에서 작업의 이해도와 정확도를 높이는 데 필수적인 요소입니다.
+      </p>
+      <p>
+        AI 모델이 사용자의 질문을 정확히 이해하도록 돕는 채팅 기록, 사용자 선호도, 관련 문서 등의 주변 정보.
+      </p>
+      <p>
+        Context 정보가 있으면, AI는 더 정확한 답변을, 애플리케이션은 사용자 상황에 맞는 서비스를 제공할 수 있고, 프로그램은 더 효율적으로 작동하게 됩니다. 이는 곧 사용자 경험을 향상시키고, 데이터를 기반으로 의미 있는 결정을 내리는 데 핵심적인 역할을 합니다.
+      </p>
+      <h3>왜 MCP가 필요한가?</h3>
+
+      <ul>
+        <li>
+          <strong>지식 갱신의 한계 극복</strong>
+          <br />
+          대규모 언어 모델(LLM)은 학습 시점까지의 정적 지식에 의존합니다. MCP를 통해 모델은 실시간 데이터 소스에 접근하여 최신 정보를 활용할 수 있습니다.
+        </li>
+        <li>
+          <strong>전문 도메인 통합</strong>
+          <br />
+          의료 기록, ERP, CRM 등 조직 내부의 전용 데이터 소스와 표준화된 방식으로 연결함으로써 도메인 특화 지식을 손쉽게 통합할 수 있습니다.
+        </li>
+        <li>
+          <strong>개발 복잡도 감소</strong>
+          <br />
+          다양한 데이터 소스 통합 로직을 프로토콜 수준에서 추상화하여 에이전트/애플리케이션 개발 비용과 통합 복잡도를 낮춥니다.
+        </li>
+      </ul>
+
+      <p>
+        MCP는 메시지 직렬화 및 전송을 위한 다양한 구성요소(예: <code>McpTransport</code>)와 전송 프로토콜(STDIO, HTTP/SSE, Streamable-HTTP 등)을 지원합니다.
+        이를 통해 모델·도구 간의 JSON-RPC 스타일 직렬화/역직렬화 및 다중 전송 채널을 표준화할 수 있습니다.
+      </p>
+      <img src="/imgs/mcp1.png" width="600px" alt="MCP" />
+      <br />
+      <a href="https://docs.spring.io/spring-ai/reference/api/mcp/mcp-overview.html#_spring_ai_mcp_integration">출처:docs.springai.io</a>
+      <br />
+      <br />
+      <img src="/imgs/mcp2.png" width="600px" alt="MCP" />
+      <br />
+      <a href="https://docs.spring.io/spring-ai/reference/api/mcp/mcp-overview.html#_spring_ai_mcp_integration">출처:docs.springai.io</a>
+      <br />
+      <br />
+
+      <hr />
+
+      <h2>2. MCP로 무엇을 할 수 있나?</h2>
+
+      <ul>
+        <li>
+          <strong>개인화된 AI 비서</strong> — 예: AI가 Google 캘린더·Notion에 접근해 개인 일정·메모를 읽고 쓰는 작업을 수행.
+        </li>
+        <li>
+          <strong>디자인 기반 코드 생성</strong> — 예: Figma 디자인을 기반으로 자동으로 웹 애플리케이션 구조를 생성(디자인 → 코드 워크플로).
+        </li>
+        <li>
+          <strong>기업용 챗봇</strong> — 조직 내 여러 DB를 연결해 실시간 데이터 분석·질의 응답을 제공.
+        </li>
+        <li>
+          <strong>물리적 액션 연계</strong> — 예: Blender에서 3D 설계를 생성하고, 3D 프린터와 연동해 출력하는 파이프라인 구성.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2>3. MCP가 중요한 이유</h2>
+
+      <p>MCP는 생태계 내 위치(개발자·앱·최종 사용자)에 따라 다양한 가치를 제공합니다:</p>
+
+      <ul>
+        <li>
+          <strong>개발자</strong> — 통합 표준을 통해 개발 시간과 구현 복잡도를 줄이고 재사용 가능한 통합 컴포넌트를 만들 수 있습니다.
+        </li>
+        <li>
+          <strong>AI 애플리케이션 / 에이전트</strong> — 외부 데이터·도구 접근을 통해 기능이 확장되고, 더 풍부하고 정확한 사용자 상호작용을 제공할 수 있습니다.
+        </li>
+        <li>
+          <strong>최종 사용자</strong> — 필요 시 실시간 데이터에 접근하고 대리 작업(스케줄 조정, 문서 작성, 분석 등)을 수행하는 더 유능한 애플리케이션을 경험할 수 있습니다.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2>4. 구현 및 운영 고려사항</h2>
+
+      <p>MCP를 도입할 때 고려해야 할 주요 항목:</p>
+
+      <ul>
+        <li>
+          <strong>보안 및 인증</strong> — 외부 시스템 접근 시 인증·권한 관리 및 민감 데이터 보호 설계 필요.
+        </li>
+        <li>
+          <strong>전송 안정성</strong> — STDIO, HTTP/SSE, Streamable-HTTP 등 다양한 채널의 지연·재전송 전략 수립.
+        </li>
+        <li>
+          <strong>스키마와 직렬화</strong> — JSON-RPC 기반 메시지 포맷과 스키마 호환성 관리.
+        </li>
+        <li>
+          <strong>관찰성(Observability)</strong> — 요청/응답 로깅, 트레이싱, 모니터링으로 문제 원인 파악 용이성 확보.
+        </li>
+        <li>
+          <strong>버전 관리</strong> — MCP 계약(스키마·엔드포인트)의 버전 관리를 통한 호환성 유지.
+        </li>
+      </ul>
+
+      <hr />
+
+      <h2>5. Spring과 MCP</h2>
+
+      <p>
+        Spring AI는 MCP Java SDK와의 통합을 위해 전용 부트 스타터와 어노테이션을 제공하여,
+        Spring 애플리케이션에서 MCP 서버 및 클라이언트 기능을 신속하게 구성할 수 있도록 지원합니다.
+        Spring Initializer를 통해 MCP 지원 템플릿으로 프로젝트를 부트스트랩하는 것도 가능합니다.
+      </p>
+
+      <p>
+        이를 통해 개발자는 MCP 생태계 양쪽(모델 제공자 측, 리소스 제공자 측)에 모두 참여할 수 있으며,
+        표준화된 방식으로 모델-리소스 상호작용을 설계·운영할 수 있습니다.
+      </p>
+      <hr />
+
+      <h2>6. MCP와 Spring AI의 Tool & Function과의 차이점</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>Spring AI Tool & Function</th>
+            <th>MCP (Model Context Protocol)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>목적</td>
+            <td>단일 AI 작업 수행 (예: 요약, QA)</td>
+            <td>모델 상호작용 전체 컨텍스트 관리</td>
+          </tr>
+          <tr>
+            <td>중심</td>
+            <td>작업 단위 (Function/Tool)</td>
+            <td>상태/Context 중심</td>
+          </tr>
+          <tr>
+            <td>범위</td>
+            <td>단일 Task</td>
+            <td>멀티턴 대화, 멀티 Tool/모델 통합</td>
+          </tr>
+          <tr>
+            <td>구조</td>
+            <td>Spring Bean + DI</td>
+            <td>Context Manager + 체인 + 상태 저장</td>
+          </tr>
+          <tr>
+            <td>사용 시점</td>
+            <td>단일 호출</td>
+            <td>대화, 세션, 복합 AI 워크플로우</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <p>
+        <strong>Tool & Function</strong>은 단일 AI 작업 단위이며, <strong>MCP</strong>는 여러 Tool과 모델을 통합하고 상태를 관리하는 프로토콜입니다.
+      </p>
+      <br />
+      <hr />
+
+      <h2>7. MCP Server Setting</h2>
+      <h5>MCP Server webmvc</h5>
+      <ol>
+        <li>
+          build.gradle
+          <pre style={{ border: '1px solid cornflowerblue' }}>
+            {`dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-server-webmvc'
+}`}
+          </pre>
+        </li>
+        <li>
+          application.yml
+          <pre style={{ border: '1px solid cornflowerblue' }}>
+            {`server:
+  port: 8088
+
+spring:
+  application:
+    name: project
+  profiles:
+    active: local
+  ai:
+    mcp:
+      server:
+        name: mcp-server-weather-webmvc
+        version: 0.0.1
+        request-timeout: 20s
+        protocol: sse  #default
+        sse-endpoint: /custom-sse
+        type: async # default async
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+logging:
+  level:
+    root: INFO`}
+          </pre>
+        </li>
+      </ol>
+      <h5>MCP Server webflux</h5>
+      <ol>
+        <li>
+          build.gradle
+          <pre style={{ border: '1px solid cornflowerblue' }}>
+            {`dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-server-webflux'
+}`}
+          </pre>
+        </li>
+        <li>
+          application.yml
+          <pre style={{ border: '1px solid cornflowerblue' }}>
+            {`server:
+  port: 8089
+
+spring:
+  application:
+    name: project
+  profiles:
+    active: local
+  ai:
+    mcp:
+      server:
+        name: mcp-server-time-webflux
+        version: 0.0.1
+        request-timeout: 20s
+        type: async # default sync
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+logging:
+  level:
+    root: INFO`}
+          </pre>
+        </li>
+      </ol>
+      <h5>MCP Server stdio</h5>
+      <ol>
+        <li>
+          build.gradle
+          <pre style={{ border: '1px solid cornflowerblue' }}>
+            {`dependencies {
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-server'
+    implementation 'org.springframework:spring-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}`}
+          </pre>
+        </li>
+        <li>
+          application.yml
+          <pre style={{ border: '1px solid cornflowerblue' }}>
+            {`server:
+  servlet:
+    encoding:
+      charset: UTF-8
+spring:
+  application:
+    name: mcp-server-weather-forecast-stdio
+  main:
+    web-application-type: none
+    banner-mode: off
+  ai:
+    mcp:
+      server:
+        name: mcp-server-weather-forecast-stdio
+        version: "0.0.1"
+logging:
+  charset:
+    file: UTF-8
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{39} : %msg%n"
+  file:
+    name: mcp-server-weather-forecast-stdio.log`}
+          </pre>
+        </li>
+      </ol>
+    </>
+  );
+};
+
+export default Chapter9Fragment;
+
