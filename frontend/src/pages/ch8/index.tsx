@@ -1,4 +1,4 @@
-const Chapter8Fragment = () => {
+const Chapter8Index = () => {
   return (
     <>
       <h1>Chapter 8. RAG (Retrieval-Augmented Generation)</h1>
@@ -143,5 +143,5 @@ implementation 'org.springframework.ai:spring-ai-jsoup-document-reader'`}
   );
 };
 
-export default Chapter8Fragment;
+export default Chapter8Index;
 

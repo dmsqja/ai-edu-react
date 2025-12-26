@@ -1,4 +1,4 @@
-const Chapter4Fragment = () => {
+const Chapter4Index = () => {
   return (
     <>
       <h1>Chapter 4. Multimodality API – Images & Vision</h1>
@@ -169,5 +169,5 @@ private ImageResponse generateImage(String description, String format) {
   );
 };
 
-export default Chapter4Fragment;
+export default Chapter4Index;
 

@@ -1,4 +1,4 @@
-const Chapter9Fragment = () => {
+const Chapter9Index = () => {
   return (
     <>
       <h1>Chapter 9. MCP (Model Context Protocol)</h1>
@@ -327,5 +327,5 @@ logging:
   );
 };
 
-export default Chapter9Fragment;
+export default Chapter9Index;
 

@@ -1,4 +1,4 @@
-const Chapter2Fragment = () => {
+const Chapter2Index = () => {
   return (
     <>
       <h1>Chapter 2. Prompt Template & Structured Output Converter</h1>
@@ -175,5 +175,5 @@ const Chapter2Fragment = () => {
   );
 };
 
-export default Chapter2Fragment;
+export default Chapter2Index;
 

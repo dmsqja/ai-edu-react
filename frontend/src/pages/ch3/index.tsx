@@ -1,4 +1,4 @@
-const Chapter3Fragment = () => {
+const Chapter3Index = () => {
   return (
     <>
       <h1>Chapter 3. Advisor API</h1>
@@ -125,5 +125,5 @@ this.chatClient = chatClientBuilder
   );
 };
 
-export default Chapter3Fragment;
+export default Chapter3Index;
 

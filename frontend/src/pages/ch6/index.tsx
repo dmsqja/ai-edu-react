@@ -1,4 +1,4 @@
-const Chapter6Fragment = () => {
+const Chapter6Index = () => {
   return (
     <>
       <h1>Chapter 6. Tool Calling</h1>
@@ -153,5 +153,5 @@ ToolExecutionExceptionProcessor toolExecutionExceptionProcessor() {
   );
 };
 
-export default Chapter6Fragment;
+export default Chapter6Index;
 

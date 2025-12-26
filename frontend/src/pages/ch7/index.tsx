@@ -1,4 +1,4 @@
-const Chapter7Fragment = () => {
+const Chapter7Index = () => {
   return (
     <>
       <h1>Chapter 7. Embedding Model</h1>
@@ -214,5 +214,5 @@ CREATE TABLE IF NOT EXISTS public.chat_pgvector (
   );
 };
 
-export default Chapter7Fragment;
+export default Chapter7Index;
 

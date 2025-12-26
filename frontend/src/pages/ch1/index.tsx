@@ -1,4 +1,4 @@
-const Chapter1Fragment = () => {
+const Chapter1Index = () => {
   return (
     <>
       <h1>Chapter 1. Chat Completion</h1>
@@ -120,5 +120,5 @@ const Chapter1Fragment = () => {
   );
 };
 
-export default Chapter1Fragment;
+export default Chapter1Index;
 

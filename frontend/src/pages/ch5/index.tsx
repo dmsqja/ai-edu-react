@@ -1,4 +1,4 @@
-const Chapter5Fragment = () => {
+const Chapter5Index = () => {
   return (
     <>
       <h1>Chapter 5. Multimodality API – Audio and Speech</h1>
@@ -178,5 +178,5 @@ public Map<String, String> textToSpeech(String text) {
   );
 };
 
-export default Chapter5Fragment;
+export default Chapter5Index;
 
