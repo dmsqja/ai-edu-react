@@ -5,9 +5,8 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ currentPage }: SidebarProps) => {
-  // Main menu (when on main page or special pages)
-  if (currentPage === 'main' || currentPage === 'postgresql' || currentPage === 'openai' || 
-      currentPage === 'gemini' || currentPage === 'springai' || currentPage === null) {
+  // Main menu (when on main page or setting pages)
+  if (currentPage === 'main' || currentPage === 'setting' || currentPage === null) {
     return (
       <ul className="nav nav-pills flex-column" style={{ fontWeight: 'bold' }}>
         <li className="nav-item">

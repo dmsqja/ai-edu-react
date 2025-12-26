@@ -3,15 +3,6 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Chapter from './pages/Chapter';
 import ChapterDesc from './pages/ChapterDesc';
-import Chapter1Fragment from './pages/ch1/Chapter1Fragment';
-import Chapter2Fragment from './pages/ch2/Chapter2Fragment';
-import Chapter3Fragment from './pages/ch3/Chapter3Fragment';
-import Chapter4Fragment from './pages/ch4/Chapter4Fragment';
-import Chapter5Fragment from './pages/ch5/Chapter5Fragment';
-import Chapter6Fragment from './pages/ch6/Chapter6Fragment';
-import Chapter7Fragment from './pages/ch7/Chapter7Fragment';
-import Chapter8Fragment from './pages/ch8/Chapter8Fragment';
-import Chapter9Fragment from './pages/ch9/Chapter9Fragment';
 import Chat from './pages/ch1/Chat';
 import ChatStream from './pages/ch1/ChatStream';
 import ChatFewShot from './pages/ch1/ChatFewShot';
@@ -53,6 +44,11 @@ import TqtRagChat from './pages/ch8/TqtRagChat';
 import MqeRagChat from './pages/ch8/MqeRagChat';
 import McpWebmvcChat from './pages/ch9/McpWebmvcChat';
 import McpWebmvcChatStream from './pages/ch9/McpWebmvcChatStream';
+import Intellij from './pages/setting/Intellij';
+import SpringAI from './pages/setting/SpringAI';
+import PostgreSQL from './pages/setting/PostgreSQL';
+import OpenAI from './pages/setting/OpenAI';
+import Gemini from './pages/setting/Gemini';
 import './App.css';
 
 function App() {
@@ -113,8 +109,13 @@ function App() {
             {/* Chapter 9 */}
             <Route path="1_mcp_webmvc_chat" element={<McpWebmvcChat />} />
             <Route path="2_mcp_webmvc_chat_stream" element={<McpWebmvcChatStream />} />
-            {/* 다른 챕터의 세부 페이지는 여기에 추가 */}
           </Route>
+          {/* Setting Pages */}
+          <Route path="setting/intellij" element={<Intellij />} />
+          <Route path="setting/springai" element={<SpringAI />} />
+          <Route path="setting/postgresql" element={<PostgreSQL />} />
+          <Route path="setting/openai" element={<OpenAI />} />
+          <Route path="setting/gemini" element={<Gemini />} />
         </Route>
       </Routes>
     </BrowserRouter>

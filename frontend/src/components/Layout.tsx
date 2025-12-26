@@ -23,22 +23,27 @@ const Layout = () => {
       {/* Top Navigation */}
       <ul className="nav justify-content-end">
         <li className="nav-item">
-          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/postgresql">
-            PostgreSQL
+          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/setting/intellij">
+            Intellij
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/springai">
+          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/setting/springai">
             SpringAi
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/openai">
+          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/setting/postgresql">
+            PostgreSQL
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/setting/openai">
             OpenAi
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/gemini">
+          <Link className="nav-link" style={{ color: 'black', fontWeight: 'bold' }} to="/setting/gemini">
             Gemini
           </Link>
         </li>
@@ -93,7 +98,7 @@ const Layout = () => {
         <div className="row">
           {/* Sidebar */}
           <div className="col-sm-2">
-            <Sidebar currentPage={currentChapter || (currentPath === '/' ? 'main' : null)} />
+            <Sidebar currentPage={currentChapter || (currentPath === '/' ? 'main' : currentPath.includes('/setting/') ? 'setting' : null)} />
           </div>
           {/* Main Content */}
           <div className="col-sm-10">
