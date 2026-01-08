@@ -28,20 +28,21 @@ const DateTime = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch6/data-time',
-      //   new URLSearchParams({ prompt: userMessage.text }),
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded',
-      //       'Accept': 'text/plain',
-      //     },
-      //   }
-      // );
-      // const responseText = response.data;
+      // 백엔드 API 호출
+      const response = await fetch('/ch6/data-time', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text }),
+      });
 
-      // 임시: API 미구현 상태이므로 더미 응답
-      const responseText = '백엔드 API가 구현되면 답변이 표시됩니다.';
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseText = await response.text();
 
       const botMessage: Message = {
         id: Date.now() + 1,

@@ -58,8 +58,23 @@ const SpeechToText = () => {
     setMessages((prev) => [audioMessage, ...prev]);
 
     try {
-      // TODO: 백엔드 API 구현 후 실제 음성 인식 텍스트로 교체
-      const responseText = '백엔드 API가 구현되면 음성이 텍스트로 변환되어 표시됩니다.';
+      // 백엔드 API 호출 (음성 파일 전송)
+      const formData = new FormData();
+      formData.append('attach', blob, 'speech.mp3');
+
+      const response = await fetch('/ch5/speech-to-text', {
+        method: 'POST',
+        headers: {
+          'Accept': 'text/plain',
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseText = await response.text();
 
       const botMessage: Message = {
         id: Date.now() + 1,

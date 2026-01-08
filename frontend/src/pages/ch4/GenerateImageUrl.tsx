@@ -28,20 +28,21 @@ const GenerateImageUrl = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch4/generate-image-url', 
-      //   new URLSearchParams({ prompt: userMessage.text }),
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded',
-      //       'Accept': 'application/x-ndjson',
-      //     },
-      //   }
-      // );
-      // const imageUrl = response.data;
+      // 백엔드 API 호출
+      const response = await fetch('/ch4/generate-image-url', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text }),
+      });
 
-      // 임시: API 미구현 상태이므로 더미 URL
-      const imageUrl = 'https://example.com/generated-image.png';
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const imageUrl = await response.text();
 
       const botMessage: Message = {
         id: Date.now() + 1,

@@ -30,9 +30,21 @@ const ChatChainOfThought = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 Chain-of-Thought 응답 처리
-      const responseText =
-        'Chain-of-Thought reasoning 응답 (백엔드 API 구현 후 단계별 추론 결과로 대체 예정)';
+      // 백엔드 API 호출
+      const response = await fetch('/ch1/chain', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseText = await response.text();
 
       const botMessage: Message = {
         id: Date.now() + 1,

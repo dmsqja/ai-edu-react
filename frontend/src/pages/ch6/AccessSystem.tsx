@@ -68,23 +68,26 @@ const AccessSystem = () => {
     setLoading(true);
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const blob = await new Promise<Blob>((resolve) => {
-      //   canvas.toBlob((blob) => {
-      //     if (blob) resolve(blob);
-      //   }, 'image/jpeg');
-      // });
-      // const formData = new FormData();
-      // formData.append('attach', blob, `snapshot_${Date.now()}.jpg`);
-      // const response = await apiClient.post('/ch6/access-system', formData, {
-      //   headers: {
-      //     'Accept': 'text/plain',
-      //   },
-      // });
-      // const responseText = response.data;
+      // 백엔드 API 호출 (웹캠 캡처 이미지)
+      const blob = await new Promise<Blob>((resolve) => {
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+        }, 'image/jpeg');
+      });
+      
+      const formData = new FormData();
+      formData.append('attach', blob, `snapshot_${Date.now()}.jpg`);
+      
+      const response = await fetch('/ch6/access-system', {
+        method: 'POST',
+        body: formData,
+      });
 
-      // 임시: API 미구현 상태이므로 더미 응답
-      const responseText = '백엔드 API가 구현되면 답변이 표시됩니다.';
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseText = await response.text();
 
       const botMessage: Message = {
         id: Date.now() + 1,

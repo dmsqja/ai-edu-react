@@ -29,33 +29,29 @@ const AdvisorStream = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await fetch('/api/ch3/stream', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'application/x-ndjson',
-      //   },
-      //   body: new URLSearchParams({ prompt: userMessage.text }),
-      // });
+      // 백엔드 API 호출 (스트리밍)
+      const response = await fetch('/ch3/stream', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text }),
+      });
 
-      // 임시: API 미구현 상태이므로 더미 스트리밍 응답
-      const targetId = `target-${Date.now()}`;
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // 스트리밍 응답 처리
+      const responseText = await response.text();
       const botMessage: Message = {
         id: Date.now() + 1,
-        text: '',
+        text: responseText,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
-        streamTargetId: targetId,
       };
 
       setMessages((prev) => [botMessage, ...prev]);
-
-      // 더미 스트리밍 시뮬레이션
-      const dummyText = '백엔드 API가 구현되면 실제 스트리밍 응답이 표시됩니다.';
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      
-      // 스트리밍 효과를 위해 한 글자씩 추가
       const targetElement = streamTargetRef.current[targetId];
       if (targetElement) {
         for (let i = 0; i < dummyText.length; i++) {

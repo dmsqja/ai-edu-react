@@ -28,9 +28,21 @@ const ChatMemory = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 ChatMemory 기반 응답 처리
-      const responseText =
-        'ChatMemory 기반 응답 (백엔드 API 구현 후 대화 문맥을 활용한 응답으로 대체 예정)';
+      // 백엔드 API 호출
+      const response = await fetch('/ch1/memory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseText = await response.text();
 
       const botMessage: Message = {
         id: Date.now() + 1,

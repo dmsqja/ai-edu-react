@@ -99,44 +99,33 @@ const VideoAnalysis = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const canvas = document.getElementById(currentCanvasIdRef.current) as HTMLCanvasElement;
-      // const imgBase64 = canvas.toDataURL('image/jpeg');
-      // const blob = await (await fetch(imgBase64)).blob();
-      // const formData = new FormData();
-      // formData.append('question', userMessage.text);
-      // formData.append('attach', blob, `snapshot_${Date.now()}.jpg`);
-      // const response = await fetch('/api/ch4/image-analysis', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Accept': 'application/x-ndjson',
-      //   },
-      //   body: formData,
-      // });
+      // 백엔드 API 호출 (웹캠 캡처 이미지)
+      const canvas = document.getElementById(currentCanvasIdRef.current) as HTMLCanvasElement;
+      const imgBase64 = canvas.toDataURL('image/jpeg');
+      const blob = await (await fetch(imgBase64)).blob();
+      
+      const formData = new FormData();
+      formData.append('question', userMessage.text);
+      formData.append('attach', blob, `snapshot_${Date.now()}.jpg`);
+      
+      const response = await fetch('/ch4/image-analysis', {
+        method: 'POST',
+        body: formData,
+      });
 
-      // 임시: API 미구현 상태이므로 더미 스트리밍 응답
-      const targetId = `stream-target-${Date.now()}`;
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseText = await response.text();
       const botMessage: Message = {
         id: Date.now() + 1,
-        text: '',
+        text: responseText,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
-        streamTargetId: targetId,
       };
 
       setMessages((prev) => [botMessage, ...prev]);
-
-      // 더미 스트리밍 시뮬레이션
-      const dummyText = '백엔드 API가 구현되면 실제 비디오 분석 결과가 스트리밍으로 표시됩니다.';
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      
-      const targetElement = streamTargetRef.current[targetId];
-      if (targetElement) {
-        for (let i = 0; i < dummyText.length; i++) {
-          targetElement.textContent += dummyText[i];
-          await new Promise((resolve) => setTimeout(resolve, 30));
-        }
-      }
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {

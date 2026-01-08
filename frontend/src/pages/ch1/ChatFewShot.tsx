@@ -28,9 +28,21 @@ const ChatFewShot = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 Few Shot Prompting 응답 처리
-      const responseText =
-        'Few Shot Prompting 응답 (백엔드 API 구현 후 실제 예시 기반 응답으로 대체 예정)';
+      // 백엔드 API 호출
+      const response = await fetch('/ch1/few', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseText = await response.text();
 
       const botMessage: Message = {
         id: Date.now() + 1,

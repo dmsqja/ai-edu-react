@@ -59,16 +59,29 @@ const SpeechToTextChatVoice = () => {
     setMessages((prev) => [audioMessage, ...prev]);
 
     try {
-      // TODO: 백엔드 API 구현 후 실제 음성+텍스트 응답으로 교체
-      const dummyAnswer = '백엔드 API가 구현되면 텍스트와 음성으로 답변이 제공됩니다.';
-      const dummyBotAudioBase64 = '';
+      // 백엔드 API 호출 (음성 파일 전송)
+      const formData = new FormData();
+      formData.append('attach', blob, 'speech.mp3');
 
+      const response = await fetch('/ch5/speech-to-text-chat-voice', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseJson = await response.json();
       const botMessage: Message = {
         id: Date.now() + 1,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
-        text: dummyAnswer,
-        botAudioBase64: dummyBotAudioBase64,
+        text: responseJson.answer,
+        botAudioBase64: responseJson.audio,
       };
 
       setMessages((prev) => [botMessage, ...prev]);

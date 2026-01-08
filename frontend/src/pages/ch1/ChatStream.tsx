@@ -28,8 +28,20 @@ const ChatStream = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 스트리밍 응답 처리
-      const responseText = 'Reactive Streams 응답 (백엔드 API 구현 후 실제 스트리밍으로 대체 예정)';
+      // 백엔드 API 호출 (스트리밍)
+      const response = await fetch('/ch1/stream', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseText = await response.text();
 
       const botMessage: Message = {
         id: Date.now() + 1,

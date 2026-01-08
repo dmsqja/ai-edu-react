@@ -28,15 +28,29 @@ const TextToSpeech = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 실제 음성 데이터로 교체
-      const dummyAudioBase64 = '';
+      // 백엔드 API 호출
+      const response = await fetch('/ch5/text-to-speech', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text || '' }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseJson = await response.json();
+      const audioBase64 = responseJson.audio;
 
       const botMessage: Message = {
         id: Date.now() + 1,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
-        audioBase64: dummyAudioBase64,
-        text: '백엔드 API가 구현되면 변환된 음성을 들을 수 있습니다.',
+        audioBase64: audioBase64,
+        text: userMessage.text || '',
       };
 
       setMessages((prev) => [botMessage, ...prev]);

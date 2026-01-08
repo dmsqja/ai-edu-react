@@ -28,20 +28,21 @@ const GenerateImage = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch4/generate-image', 
-      //   new URLSearchParams({ prompt: userMessage.text }),
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded',
-      //       'Accept': 'application/x-ndjson',
-      //     },
-      //   }
-      // );
-      // const imageBase64 = response.data;
+      // 백엔드 API 호출
+      const response = await fetch('/ch4/generate-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text }),
+      });
 
-      // 임시: API 미구현 상태이므로 더미 base64 이미지 (1x1 투명 픽셀)
-      const imageBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const imageBase64 = await response.text();
 
       const botMessage: Message = {
         id: Date.now() + 1,

@@ -29,23 +29,23 @@ const CustomerInquiry = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const url = responseType === 'json' ? '/ch6/customer-inquiry-json' : '/ch6/customer-inquiry-string';
-      // const response = await apiClient.post(url,
-      //   new URLSearchParams({ prompt: userMessage.text }),
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded',
-      //       'Accept': 'application/json',
-      //     },
-      //   }
-      // );
-      // const responseText = typeof response.data === 'string' ? response.data : JSON.stringify(response.data, null, 2);
+      // 백엔드 API 호출
+      const url = responseType === 'json' ? '/ch6/customer-inquiry-json' : '/ch6/customer-inquiry-string';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text }),
+      });
 
-      // 임시: API 미구현 상태이므로 더미 응답
-      const responseText = responseType === 'json' 
-        ? JSON.stringify({ id: 'id10', name: '고객명', email: 'customer@example.com' }, null, 2)
-        : 'id10 정보: 고객명, customer@example.com';
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const responseText = JSON.stringify(data, null, 2);
 
       const botMessage: Message = {
         id: Date.now() + 1,

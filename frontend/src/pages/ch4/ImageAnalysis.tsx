@@ -55,33 +55,29 @@ const ImageAnalysis = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const formData = new FormData();
-      // formData.append('question', userMessage.text);
-      // formData.append('attach', selectedFile);
-      // const response = await fetch('/api/ch4/image-analysis', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Accept': 'application/x-ndjson',
-      //   },
-      //   body: formData,
-      // });
+      // 백엔드 API 호출 (FormData)
+      const formData = new FormData();
+      formData.append('question', userMessage.text);
+      formData.append('attach', selectedFile);
+      
+      const response = await fetch('/ch4/image-analysis', {
+        method: 'POST',
+        body: formData,
+      });
 
-      // 임시: API 미구현 상태이므로 더미 스트리밍 응답
-      const targetId = `target-${Date.now()}`;
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseText = await response.text();
       const botMessage: Message = {
         id: Date.now() + 1,
-        text: '',
+        text: responseText,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
-        streamTargetId: targetId,
       };
 
       setMessages((prev) => [botMessage, ...prev]);
-
-      // 더미 스트리밍 시뮬레이션
-      const dummyText = '백엔드 API가 구현되면 실제 이미지 분석 결과가 스트리밍으로 표시됩니다.';
-      await new Promise((resolve) => setTimeout(resolve, 100));
       
       const targetElement = streamTargetRef.current[targetId];
       if (targetElement) {

@@ -30,20 +30,22 @@ const ListOutput = () => {
     setLoading(true);
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch2/list-output', 
-      //   new URLSearchParams({ location, content, language }),
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded',
-      //       'Accept': 'application/json',
-      //     },
-      //   }
-      // );
-      // const responseText = JSON.stringify(response.data, null, 2);
+      // 백엔드 API 호출
+      const response = await fetch('/ch2/list-output', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+        },
+        body: new URLSearchParams({ location, content, language }),
+      });
 
-      // 임시: API 미구현 상태이므로 더미 응답
-      const responseText = '백엔드 API가 구현되면 실제 응답이 표시됩니다.';
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const responseText = JSON.stringify(data, null, 2);
 
       const botMessage: Message = {
         id: Date.now() + 1,

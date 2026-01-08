@@ -27,29 +27,39 @@ const TextToSpeechChatStream = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 실제 스트리밍 음성 응답으로 교체
-      const dummyText = '백엔드 API가 구현되면 스트리밍 음성 응답이 재생됩니다.';
+      // 백엔드 API 호출 (스트리밍)
+      const response = await fetch('/ch5/text-to-speech-chat-stream', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/octet-stream',
+        },
+        body: new URLSearchParams({ prompt: userMessage.text || '' }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // 스트리밍 응답 처리 (바이너리 데이터를 Base64로 변환)
+      const audioBlob = await response.blob();
+      const reader = new FileReader();
+      const audioBase64 = await new Promise<string>((resolve) => {
+        reader.onloadend = () => {
+          const base64 = reader.result as string;
+          // "data:application/octet-stream;base64," 부분 제거
+          resolve(base64.split(',')[1]);
+        };
+        reader.readAsDataURL(audioBlob);
+      });
       const botMessage: Message = {
         id: Date.now() + 1,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
-        text: '',
+        text: '스트리밍 음성 응답을 받았습니다.',
+        audioBase64: audioBase64,
       };
       setMessages((prev) => [botMessage, ...prev]);
-
-      // 간단한 텍스트 스트리밍 시뮬레이션
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      for (let i = 0; i < dummyText.length; i++) {
-        setMessages((prev) => {
-          const [first, ...rest] = prev;
-          if (!first || first.id !== botMessage.id) return prev;
-          return [
-            { ...first, text: (first.text || '') + dummyText[i] },
-            ...rest,
-          ];
-        });
-        await new Promise((resolve) => setTimeout(resolve, 20));
-      }
     } catch (e) {
       const errorMessage: Message = {
         id: Date.now() + 1,
