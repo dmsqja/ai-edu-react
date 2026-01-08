@@ -5,6 +5,8 @@ interface Message {
   sender: 'user' | 'bot';
   timestamp: string;
   text?: string;
+  audioUrl?: string;
+  audioBase64?: string;
 }
 
 const TextToSpeechChatStream = () => {
@@ -41,23 +43,16 @@ const TextToSpeechChatStream = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // 스트리밍 응답 처리 (바이너리 데이터를 Base64로 변환)
+      // 스트리밍 오디오를 Blob으로 변환
       const audioBlob = await response.blob();
-      const reader = new FileReader();
-      const audioBase64 = await new Promise<string>((resolve) => {
-        reader.onloadend = () => {
-          const base64 = reader.result as string;
-          // "data:application/octet-stream;base64," 부분 제거
-          resolve(base64.split(',')[1]);
-        };
-        reader.readAsDataURL(audioBlob);
-      });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
       const botMessage: Message = {
         id: Date.now() + 1,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
-        text: '스트리밍 음성 응답을 받았습니다.',
-        audioBase64: audioBase64,
+        text: '',  // 텍스트 없음 (음성만)
+        audioUrl: audioUrl,  // Blob URL 사용
       };
       setMessages((prev) => [botMessage, ...prev]);
     } catch (e) {
@@ -150,11 +145,23 @@ const TextToSpeechChatStream = () => {
                             className="small p-2 me-3 mb-3 rounded-3 bg-info"
                             style={{ overflow: 'auto' }}
                           >
-                            <span className="input-group-text me-2">응답 음성</span>
+                            <span className="input-group-text me-2">음성 응답</span>
                             <br />
-                            <pre className="text-white" style={{ fontWeight: 'bold' }}>
-                              {m.text}
-                            </pre>
+                            {m.audioUrl && (
+                              <audio controls autoPlay>
+                                <source src={m.audioUrl} type="audio/mpeg" />
+                              </audio>
+                            )}
+                            {m.audioBase64 && (
+                              <audio controls autoPlay>
+                                <source src={`data:audio/mp3;base64,${m.audioBase64}`} type="audio/mpeg" />
+                              </audio>
+                            )}
+                            {m.text && (
+                              <pre className="text-white" style={{ fontWeight: 'bold' }}>
+                                {m.text}
+                              </pre>
+                            )}
                           </div>
                           <img
                             src="/imgs/chatbot.png"
