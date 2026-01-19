@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import apiClient from '../../api/client'; // TODO: 백엔드 API 구현 후 활성화
 
 interface Message {
   id: number;
