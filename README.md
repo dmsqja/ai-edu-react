@@ -9,6 +9,20 @@ Spring Boot + Thymeleaf 기반 AI 교육 플랫폼을 **React**로 전환하는 
 
 > **Note**: 백엔드 소스코드는 비공개이며, 실행 가능한 JAR 파일만 제공됩니다.
 
+### 📸 스크린샷
+
+#### 메인 화면
+![메인 화면](./docs/images/01-main-home.png)
+*Spring AI 학습 플랫폼 - 9개 챕터 메뉴와 홈 화면*
+
+#### Chat 기능 (Chapter 1)
+![Chat 화면](./docs/images/02-ch1-chat.png)
+*AI 챗봇과의 실시간 대화 - 서울 맛집 추천 예시*
+
+#### 이미지 생성 (Chapter 4)
+![이미지 생성](./docs/images/03-ch4-image-generation.png)
+*AI를 활용한 이미지 생성 - 서울 야경*
+
 ### 📖 챕터 구성
 - **Chapter 1**: Chat (기본 채팅, 스트리밍, Few-Shot, Chain of Thought, Memory)
 - **Chapter 2**: Prompt Template (템플릿, 출력 구조화)
