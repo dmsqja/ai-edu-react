@@ -52,13 +52,6 @@ const AdvisorStream = () => {
       };
 
       setMessages((prev) => [botMessage, ...prev]);
-      const targetElement = streamTargetRef.current[targetId];
-      if (targetElement) {
-        for (let i = 0; i < dummyText.length; i++) {
-          targetElement.textContent += dummyText[i];
-          await new Promise((resolve) => setTimeout(resolve, 30));
-        }
-      }
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {

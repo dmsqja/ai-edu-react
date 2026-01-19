@@ -16,7 +16,7 @@ const VideoAnalysis = () => {
   const [isAutoMode, setIsAutoMode] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const autoIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const autoIntervalRef = useRef<number | null>(null);
   const currentCanvasIdRef = useRef<string>('');
   const streamTargetRef = useRef<{ [key: string]: HTMLPreElement }>({});
 

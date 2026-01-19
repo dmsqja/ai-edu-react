@@ -12,7 +12,6 @@ interface Message {
 const ImageAnalysis = () => {
   const [question, setQuestion] = useState('사진의 내용을 설명해줘');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -24,8 +23,6 @@ const ImageAnalysis = () => {
       setSelectedFile(file);
       const reader = new FileReader();
       reader.onload = (event) => {
-        setPreviewImage(event.target?.result as string);
-        
         // 미리보기 메시지 추가
         const previewMessage: Message = {
           id: Date.now(),
@@ -78,14 +75,6 @@ const ImageAnalysis = () => {
       };
 
       setMessages((prev) => [botMessage, ...prev]);
-      
-      const targetElement = streamTargetRef.current[targetId];
-      if (targetElement) {
-        for (let i = 0; i < dummyText.length; i++) {
-          targetElement.textContent += dummyText[i];
-          await new Promise((resolve) => setTimeout(resolve, 30));
-        }
-      }
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {

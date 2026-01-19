@@ -46,7 +46,7 @@ const GenerateImage = () => {
 
       const botMessage: Message = {
         id: Date.now() + 1,
-        text: question,
+        text: userMessage.text,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
         imageBase64: imageBase64,
@@ -73,7 +73,7 @@ const GenerateImage = () => {
     }
   };
 
-  const downloadImage = (imageBase64: string, question: string) => {
+  const downloadImage = (imageBase64: string) => {
     const link = document.createElement('a');
     link.href = `data:image/png;base64,${imageBase64}`;
     link.download = `output-${Date.now()}.png`;
@@ -159,7 +159,7 @@ const GenerateImage = () => {
                                   download={`output-${Date.now()}.png`}
                                   onClick={(e) => {
                                     e.preventDefault();
-                                    downloadImage(message.imageBase64!, message.text);
+                                    downloadImage(message.imageBase64!);
                                   }}
                                 >
                                   Image Download
