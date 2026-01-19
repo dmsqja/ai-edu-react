@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
-// import apiClient from '../../api/client'; // TODO: 백엔드 API 구현 후 활성화
 
 interface Message {
   id: number;
   sender: 'user' | 'bot';
   timestamp: string;
   text: string;
-  imageUrl?: string;
+  canvasId?: string;
 }
 
 const AccessSystem = () => {
@@ -44,71 +43,75 @@ const AccessSystem = () => {
   }, []);
 
   const takeSnapshot = async () => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || loading) return;
 
-    const canvas = document.createElement('canvas');
-    canvas.width = 160;
-    canvas.height = 140;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const canvasId = `target-${Date.now()}`;
 
-    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-
-    // 사용자 메시지로 이미지 추가
-    const imageUrl = canvas.toDataURL('image/jpeg');
-    const userMessage: Message = {
+    // 프리뷰 메시지 추가
+    const previewMessage: Message = {
       id: Date.now(),
+      text: '선택한 이미지 입니다.',
       sender: 'user',
       timestamp: new Date().toLocaleTimeString('ko-KR'),
-      text: '선택한 이미지 입니다.',
-      imageUrl: imageUrl,
+      canvasId: canvasId,
     };
 
-    setMessages((prev) => [userMessage, ...prev]);
+    setMessages((prev) => [previewMessage, ...prev]);
     setLoading(true);
 
-    try {
-      // 백엔드 API 호출 (웹캠 캡처 이미지)
-      const blob = await new Promise<Blob>((resolve) => {
-        canvas.toBlob((blob) => {
-          if (blob) resolve(blob);
-        }, 'image/jpeg');
-      });
-      
-      const formData = new FormData();
-      formData.append('attach', blob, `snapshot_${Date.now()}.jpg`);
-      
-      const response = await fetch('/ch6/access-system', {
-        method: 'POST',
-        body: formData,
-      });
+    // 다음 렌더링에서 canvas에 그리기
+    setTimeout(async () => {
+      const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+      if (canvas && videoRef.current) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+        }
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        try {
+          // 백엔드 API 호출
+          const imgBase64 = canvas.toDataURL('image/jpeg');
+          const blob = await (await fetch(imgBase64)).blob();
+
+          const formData = new FormData();
+          formData.append('attach', blob, `snapshot_${Date.now()}.jpg`);
+
+          const response = await fetch('/ch6/access-system', {
+            method: 'POST',
+            headers: {
+              'Accept': 'text/plain',
+            },
+            body: formData,
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const responseText = await response.text();
+
+          const botMessage: Message = {
+            id: Date.now() + 1,
+            text: responseText,
+            sender: 'bot',
+            timestamp: new Date().toLocaleTimeString('ko-KR'),
+          };
+
+          setMessages((prev) => [botMessage, ...prev]);
+        } catch (error) {
+          console.error('Error sending snapshot:', error);
+          const errorMessage: Message = {
+            id: Date.now() + 1,
+            text: '오류가 발생했습니다. 나중에 다시 시도해주세요.',
+            sender: 'bot',
+            timestamp: new Date().toLocaleTimeString('ko-KR'),
+          };
+          setMessages((prev) => [errorMessage, ...prev]);
+        } finally {
+          setLoading(false);
+        }
       }
-
-      const responseText = await response.text();
-
-      const botMessage: Message = {
-        id: Date.now() + 1,
-        text: responseText,
-        sender: 'bot',
-        timestamp: new Date().toLocaleTimeString('ko-KR'),
-      };
-
-      setMessages((prev) => [botMessage, ...prev]);
-    } catch (error) {
-      console.error('Error sending snapshot:', error);
-      const errorMessage: Message = {
-        id: Date.now() + 1,
-        text: '오류가 발생했습니다. 나중에 다시 시도해주세요.',
-        sender: 'bot',
-        timestamp: new Date().toLocaleTimeString('ko-KR'),
-      };
-      setMessages((prev) => [errorMessage, ...prev]);
-    } finally {
-      setLoading(false);
-    }
+    }, 0);
   };
 
   return (
@@ -116,7 +119,7 @@ const AccessSystem = () => {
       <h2 className="text-center">4. Access System</h2>
       <div className="container py-5">
         <div className="row d-flex justify-content-center">
-          <div className="col-sm-10">
+          <div className="col-sm-9">
             <button
               className="btn btn-primary"
               disabled
@@ -128,17 +131,14 @@ const AccessSystem = () => {
             <div className="card">
               <div className="card-header text-muted d-flex justify-content-start align-items-center p-3">
                 <div className="input-group mb-0">
-                  <video
-                    ref={videoRef}
-                    id="video_area"
-                    autoPlay
-                    playsInline
-                    style={{ width: '100%', maxWidth: '640px', borderRadius: '4px' }}
-                  />
-                </div>
-                <div className="input-group mt-2">
-                  <button type="button" className="btn btn-primary" id="capture_btn" onClick={takeSnapshot}>
-                    Capture
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                    id="capture_btn"
+                    onClick={takeSnapshot}
+                    disabled={loading}
+                  >
+                    Image Capture & Send
                   </button>
                 </div>
               </div>
@@ -152,17 +152,26 @@ const AccessSystem = () => {
                           <p className="small mb-1 text-muted">{message.timestamp}</p>
                         </div>
                         <div className="d-flex flex-row justify-content-start">
-                          <img src="/imgs/user.jpg" alt="User" style={{ width: '45px', height: '100%' }} />
+                          <img
+                            src="/imgs/user.jpg"
+                            alt="User"
+                            style={{ width: '45px', height: '100%' }}
+                          />
                           <div>
-                            <p>{message.text}</p>
-                            {message.imageUrl && (
-                              <img
-                                src={message.imageUrl}
-                                alt="Captured"
-                                width="160"
-                                height="140"
-                                style={{ border: '1px solid #ddd' }}
-                              />
+                            {message.canvasId ? (
+                              <>
+                                <p>선택한 이미지 입니다.</p>
+                                <canvas
+                                  id={message.canvasId}
+                                  width="160"
+                                  height="140"
+                                  style={{ border: '1px solid #ddd' }}
+                                />
+                              </>
+                            ) : (
+                              <p className="small p-2 ms-3 mb-3 rounded-3 bg-body-tertiary bg-warning">
+                                {message.text}
+                              </p>
                             )}
                           </div>
                         </div>
@@ -174,12 +183,22 @@ const AccessSystem = () => {
                           <p className="small mb-1">Chatbot</p>
                         </div>
                         <div className="d-flex flex-row justify-content-end mb-4 pt-1">
-                          <div className="small p-2 me-3 mb-3 rounded-3 bg-info" style={{ overflow: 'auto' }}>
-                            <pre className="text-white" style={{ textAlign: 'left', fontWeight: 'bold' }}>
+                          <div
+                            className="small p-2 me-3 mb-3 rounded-3 bg-info"
+                            style={{ overflow: 'auto' }}
+                          >
+                            <pre
+                              className="text-white"
+                              style={{ textAlign: 'left', fontWeight: 'bold' }}
+                            >
                               {message.text}
                             </pre>
                           </div>
-                          <img src="/imgs/chatbot.png" alt="Chat Bot" style={{ width: '45px', height: '100%' }} />
+                          <img
+                            src="/imgs/chatbot.png"
+                            alt="Chat Bot"
+                            style={{ width: '45px', height: '100%' }}
+                          />
                         </div>
                       </>
                     )}
@@ -187,6 +206,14 @@ const AccessSystem = () => {
                 ))}
               </div>
             </div>
+          </div>
+          <div className="col-sm-3">
+            <video
+              id="video_area"
+              ref={videoRef}
+              autoPlay
+              style={{ border: '1px solid blue', height: '300px', width: '100%' }}
+            />
           </div>
         </div>
       </div>
