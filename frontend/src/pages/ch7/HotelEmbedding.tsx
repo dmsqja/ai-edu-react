@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import apiClient from '../../api/client'; // TODO: 백엔드 API 구현 후 활성화
+import apiClient from '../../api/client';
 
 interface Message {
   id: number;
@@ -31,20 +31,16 @@ const HotelEmbedding = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch7/hotel-embedding',
-      //   new URLSearchParams({ prompt: question, section: section, name: name }),
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded',
-      //       'Accept': 'text/plain',
-      //     },
-      //   }
-      // );
-      // const responseText = response.data;
-
-      // 임시: API 미구현 상태이므로 더미 응답
-      const responseText = '백엔드 API가 구현되면 답변이 표시됩니다.';
+      const response = await apiClient.post('/ch7/hotel-embedding',
+        new URLSearchParams({ prompt: question, section: section, name: name }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'text/plain',
+          },
+        }
+      );
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now() + 1,
@@ -71,16 +67,13 @@ const HotelEmbedding = () => {
   const addHotels = async () => {
     setLoading(true);
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch7/add-hotels', null, {
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'text/plain',
-      //   },
-      // });
-      // const responseText = response.data;
-
-      const responseText = '호텔 데이터가 추가되었습니다. (백엔드 API 구현 필요)';
+      const response = await apiClient.post('/ch7/add-hotels', null, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+      });
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now(),
@@ -100,16 +93,13 @@ const HotelEmbedding = () => {
   const deleteHotels = async () => {
     setLoading(true);
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch7/delete-hotels', null, {
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'text/plain',
-      //   },
-      // });
-      // const responseText = response.data;
-
-      const responseText = '호텔 데이터가 삭제되었습니다. (백엔드 API 구현 필요)';
+      const response = await apiClient.post('/ch7/delete-hotels', null, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+      });
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now(),

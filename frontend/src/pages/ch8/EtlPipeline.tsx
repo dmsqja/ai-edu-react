@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import apiClient from '../../api/client'; // TODO: 백엔드 API 구현 후 활성화
+import apiClient from '../../api/client';
 
 interface Message {
   id: number;
@@ -20,18 +20,15 @@ const EtlPipeline = () => {
     setLoading(true);
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const formData = new FormData();
-      // formData.append('type', type);
-      // formData.append('attach', file);
-      // const response = await apiClient.post('/ch8/add-vector-store', formData, {
-      //   headers: {
-      //     'Accept': 'text/plain',
-      //   },
-      // });
-      // const responseText = response.data;
-
-      const responseText = 'ETL 파이프라인이 처리되었습니다. (백엔드 API 구현 필요)';
+      const formData = new FormData();
+      formData.append('type', type);
+      formData.append('attach', file);
+      const response = await apiClient.post('/ch8/add-vector-store', formData, {
+        headers: {
+          'Accept': 'text/plain',
+        },
+      });
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now(),
@@ -59,16 +56,13 @@ const EtlPipeline = () => {
   const deleteData = async () => {
     setLoading(true);
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch8/clear-vector-store', new URLSearchParams({ type: type }), {
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'text/plain',
-      //   },
-      // });
-      // const responseText = response.data;
-
-      const responseText = 'Vector Store가 삭제되었습니다. (백엔드 API 구현 필요)';
+      const response = await apiClient.post('/ch8/clear-vector-store', new URLSearchParams({ type: type }), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+      });
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now(),

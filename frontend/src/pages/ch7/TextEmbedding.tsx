@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import apiClient from '../../api/client'; // TODO: 백엔드 API 구현 후 활성화
+import apiClient from '../../api/client';
 
 interface Message {
   id: number;
@@ -28,20 +28,16 @@ const TextEmbedding = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch7/text-embedding',
-      //   new URLSearchParams({ prompt: userMessage.text }),
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded',
-      //       'Accept': 'text/plain',
-      //     },
-      //   }
-      // );
-      // const responseText = response.data;
-
-      // 임시: API 미구현 상태이므로 더미 응답
-      const responseText = '백엔드 API가 구현되면 답변이 표시됩니다.';
+      const response = await apiClient.post('/ch7/text-embedding',
+        new URLSearchParams({ prompt: userMessage.text }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'text/plain',
+          },
+        }
+      );
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now() + 1,
@@ -68,16 +64,13 @@ const TextEmbedding = () => {
   const addTexts = async () => {
     setLoading(true);
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch7/add-texts', null, {
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'text/plain',
-      //   },
-      // });
-      // const responseText = response.data;
-
-      const responseText = '텍스트 데이터가 추가되었습니다. (백엔드 API 구현 필요)';
+      const response = await apiClient.post('/ch7/add-texts', null, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+      });
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now(),
@@ -97,16 +90,13 @@ const TextEmbedding = () => {
   const deleteTexts = async () => {
     setLoading(true);
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch7/delete-texts', null, {
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'text/plain',
-      //   },
-      // });
-      // const responseText = response.data;
-
-      const responseText = '텍스트 데이터가 삭제되었습니다. (백엔드 API 구현 필요)';
+      const response = await apiClient.post('/ch7/delete-texts', null, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+      });
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now(),

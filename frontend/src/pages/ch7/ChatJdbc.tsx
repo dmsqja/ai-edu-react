@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ChatUI from '../../components/ChatUI';
-// import apiClient from '../../api/client'; // TODO: 백엔드 API 구현 후 활성화
+import apiClient from '../../api/client';
 
 interface Message {
   id: number;
@@ -29,20 +29,16 @@ const ChatJdbc = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const response = await apiClient.post('/ch7/chat-jdbc',
-      //   new URLSearchParams({ prompt: userMessage.text }),
-      //   {
-      //     headers: {
-      //       'Content-Type': 'application/x-www-form-urlencoded',
-      //       'Accept': 'application/x-ndjson',
-      //     },
-      //   }
-      // );
-      // const responseText = response.data;
-
-      // 임시: API 미구현 상태이므로 더미 응답
-      const responseText = '백엔드 API가 구현되면 답변이 표시됩니다.';
+      const response = await apiClient.post('/ch7/chat-jdbc',
+        new URLSearchParams({ prompt: userMessage.text }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/x-ndjson',
+          },
+        }
+      );
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now() + 1,
@@ -69,19 +65,14 @@ const ChatJdbc = () => {
   const deleteChat = async (deleteAll: boolean = false) => {
     setLoading(true);
     try {
-      // TODO: 백엔드 API 구현 후 활성화
-      // const url = deleteAll ? '/ch7/delete-all-chat-jdbc' : '/ch7/delete-chat-jdbc';
-      // const response = await apiClient.post(url, null, {
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'text/plain',
-      //   },
-      // });
-      // const responseText = response.data;
-
-      const responseText = deleteAll
-        ? '모든 대화 기록이 삭제되었습니다. (백엔드 API 구현 필요)'
-        : '대화 기록이 삭제되었습니다. (백엔드 API 구현 필요)';
+      const url = deleteAll ? '/ch7/delete-all-chat-jdbc' : '/ch7/delete-chat-jdbc';
+      const response = await apiClient.post(url, null, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/plain',
+        },
+      });
+      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now(),

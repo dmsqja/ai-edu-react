@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import ChatUI from '../../components/ChatUI';
-// import apiClient from '../../api/client'; // TODO: 백엔드 API 구현 후 활성화
 
 interface Message {
   id: number;
@@ -31,29 +30,25 @@ const RagChat = () => {
     setQuestion('');
 
     try {
-      // TODO: 백엔드 API 구현 후 스트리밍 응답 처리
-      // const response = await fetch('/ch8/rag-chat', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'application/x-ndjson',
-      //   },
-      //   body: new URLSearchParams({ prompt: question, type: type }),
-      // });
-      // const reader = response.body?.getReader();
-      // const decoder = new TextDecoder('utf-8');
-      // let responseText = '';
-      // if (reader) {
-      //   while (true) {
-      //     const { value, done } = await reader.read();
-      //     if (done) break;
-      //     const chunk = decoder.decode(value);
-      //     responseText += chunk;
-      //     // 실시간 업데이트를 위해 메시지 업데이트
-      //   }
-      // }
-
-      const responseText = 'RAG Chat 응답 (백엔드 API 구현 후 실제 스트리밍으로 대체 예정)';
+      const response = await fetch('/ch8/rag-chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/x-ndjson',
+        },
+        body: new URLSearchParams({ prompt: question, type: type }),
+      });
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let responseText = '';
+      if (reader) {
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value);
+          responseText += chunk;
+        }
+      }
 
       const botMessage: Message = {
         id: Date.now() + 1,
