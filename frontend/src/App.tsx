@@ -15,63 +15,63 @@ import Chapter8Index from './pages/ch8';
 import Chapter9Index from './pages/ch9';
 
 // Chapter 1 - Lazy Loading
-const Chat = lazy(() => import('./pages/ch1/Chat'));
-const ChatStream = lazy(() => import('./pages/ch1/ChatStream'));
-const ChatFewShot = lazy(() => import('./pages/ch1/ChatFewShot'));
-const ChatChainOfThought = lazy(() => import('./pages/ch1/ChatChainOfThought'));
-const ChatMemory = lazy(() => import('./pages/ch1/ChatMemory'));
+const Chat = lazy(() => import('./pages/ch1/1_Chat'));
+const ChatStream = lazy(() => import('./pages/ch1/2_ChatStream'));
+const ChatFewShot = lazy(() => import('./pages/ch1/3_ChatFewShot'));
+const ChatChainOfThought = lazy(() => import('./pages/ch1/4_ChatChainOfThought'));
+const ChatMemory = lazy(() => import('./pages/ch1/5_ChatMemory'));
 
 // Chapter 2 - Lazy Loading
-const PromptTemplate = lazy(() => import('./pages/ch2/PromptTemplate'));
-const ListOutput = lazy(() => import('./pages/ch2/ListOutput'));
-const MapOutput = lazy(() => import('./pages/ch2/MapOutput'));
-const BeanOutput = lazy(() => import('./pages/ch2/BeanOutput'));
-const ParameterizedTypeReference = lazy(() => import('./pages/ch2/ParameterizedTypeReference'));
+const PromptTemplate = lazy(() => import('./pages/ch2/1_PromptTemplate'));
+const ListOutput = lazy(() => import('./pages/ch2/2_ListOutput'));
+const MapOutput = lazy(() => import('./pages/ch2/3_MapOutput'));
+const BeanOutput = lazy(() => import('./pages/ch2/4_BeanOutput'));
+const ParameterizedTypeReference = lazy(() => import('./pages/ch2/5_ParameterizedTypeReference'));
 
 // Chapter 3 - Lazy Loading
-const Advisor = lazy(() => import('./pages/ch3/Advisor'));
-const AdvisorStream = lazy(() => import('./pages/ch3/AdvisorStream'));
-const RecursiveAdvisors = lazy(() => import('./pages/ch3/RecursiveAdvisors'));
+const Advisor = lazy(() => import('./pages/ch3/1_Advisor'));
+const AdvisorStream = lazy(() => import('./pages/ch3/2_AdvisorStream'));
+const RecursiveAdvisors = lazy(() => import('./pages/ch3/3_RecursiveAdvisors'));
 
 // Chapter 4 - Lazy Loading
-const GenerateImageUrl = lazy(() => import('./pages/ch4/GenerateImageUrl'));
-const GenerateImage = lazy(() => import('./pages/ch4/GenerateImage'));
-const ImageAnalysis = lazy(() => import('./pages/ch4/ImageAnalysis'));
-const VideoAnalysis = lazy(() => import('./pages/ch4/VideoAnalysis'));
+const GenerateImageUrl = lazy(() => import('./pages/ch4/1_GenerateImageUrl'));
+const GenerateImage = lazy(() => import('./pages/ch4/2_GenerateImage'));
+const ImageAnalysis = lazy(() => import('./pages/ch4/3_ImageAnalysis'));
+const VideoAnalysis = lazy(() => import('./pages/ch4/4_VideoAnalysis'));
 
 // Chapter 5 - Lazy Loading
-const TextToSpeech = lazy(() => import('./pages/ch5/TextToSpeech'));
-const TextToSpeechChat = lazy(() => import('./pages/ch5/TextToSpeechChat'));
-const TextToSpeechChatStream = lazy(() => import('./pages/ch5/TextToSpeechChatStream'));
-const SpeechToText = lazy(() => import('./pages/ch5/SpeechToText'));
-const SpeechToTextChat = lazy(() => import('./pages/ch5/SpeechToTextChat'));
-const SpeechToTextChatVoice = lazy(() => import('./pages/ch5/SpeechToTextChatVoice'));
+const TextToSpeech = lazy(() => import('./pages/ch5/1_TextToSpeech'));
+const TextToSpeechChat = lazy(() => import('./pages/ch5/2_TextToSpeechChat'));
+const TextToSpeechChatStream = lazy(() => import('./pages/ch5/3_TextToSpeechChatStream'));
+const SpeechToText = lazy(() => import('./pages/ch5/4_SpeechToText'));
+const SpeechToTextChat = lazy(() => import('./pages/ch5/5_SpeechToTextChat'));
+const SpeechToTextChatVoice = lazy(() => import('./pages/ch5/6_SpeechToTextChatVoice'));
 
 // Chapter 6 - Lazy Loading
-const DateTime = lazy(() => import('./pages/ch6/DateTime'));
-const CustomerInquiry = lazy(() => import('./pages/ch6/CustomerInquiry'));
-const Recommendation = lazy(() => import('./pages/ch6/Recommendation'));
-const AccessSystem = lazy(() => import('./pages/ch6/AccessSystem'));
+const DateTime = lazy(() => import('./pages/ch6/1_DateTime'));
+const CustomerInquiry = lazy(() => import('./pages/ch6/2_CustomerInquiry'));
+const Recommendation = lazy(() => import('./pages/ch6/3_Recommendation'));
+const AccessSystem = lazy(() => import('./pages/ch6/4_AccessSystem'));
 
 // Chapter 7 - Lazy Loading
-const TextEmbedding = lazy(() => import('./pages/ch7/TextEmbedding'));
-const HotelEmbedding = lazy(() => import('./pages/ch7/HotelEmbedding'));
-const ChatPgvector = lazy(() => import('./pages/ch7/ChatPgvector'));
-const ChatJdbc = lazy(() => import('./pages/ch7/ChatJdbc'));
+const TextEmbedding = lazy(() => import('./pages/ch7/1_TextEmbedding'));
+const HotelEmbedding = lazy(() => import('./pages/ch7/2_HotelEmbedding'));
+const ChatPgvector = lazy(() => import('./pages/ch7/3_ChatPgvector'));
+const ChatJdbc = lazy(() => import('./pages/ch7/4_ChatJdbc'));
 
 // Chapter 8 - Lazy Loading
-const EtlPipeline = lazy(() => import('./pages/ch8/EtlPipeline'));
-const RagChat = lazy(() => import('./pages/ch8/RagChat'));
-const RagChatPromptTemplate = lazy(() => import('./pages/ch8/RagChatPromptTemplate'));
-const RaaRagChat = lazy(() => import('./pages/ch8/RaaRagChat'));
-const CqtRagChat = lazy(() => import('./pages/ch8/CqtRagChat'));
-const RqtRagChat = lazy(() => import('./pages/ch8/RqtRagChat'));
-const TqtRagChat = lazy(() => import('./pages/ch8/TqtRagChat'));
-const MqeRagChat = lazy(() => import('./pages/ch8/MqeRagChat'));
+const EtlPipeline = lazy(() => import('./pages/ch8/1_EtlPipeline'));
+const RagChat = lazy(() => import('./pages/ch8/2_RagChat'));
+const RagChatPromptTemplate = lazy(() => import('./pages/ch8/3_RagChatPromptTemplate'));
+const RaaRagChat = lazy(() => import('./pages/ch8/4_RaaRagChat'));
+const CqtRagChat = lazy(() => import('./pages/ch8/5_CqtRagChat'));
+const RqtRagChat = lazy(() => import('./pages/ch8/6_RqtRagChat'));
+const TqtRagChat = lazy(() => import('./pages/ch8/7_TqtRagChat'));
+const MqeRagChat = lazy(() => import('./pages/ch8/8_MqeRagChat'));
 
 // Chapter 9 - Lazy Loading
-const McpWebmvcChat = lazy(() => import('./pages/ch9/McpWebmvcChat'));
-const McpWebmvcChatStream = lazy(() => import('./pages/ch9/McpWebmvcChatStream'));
+const McpWebmvcChat = lazy(() => import('./pages/ch9/1_McpWebmvcChat'));
+const McpWebmvcChatStream = lazy(() => import('./pages/ch9/2_McpWebmvcChatStream'));
 
 // Setting Pages - Lazy Loading
 const Intellij = lazy(() => import('./pages/setting/Intellij'));
