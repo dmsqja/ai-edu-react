@@ -28,6 +28,17 @@ const AdvisorStream = () => {
     setLoading(true);
     setQuestion('');
 
+    const streamTargetId = `stream-${Date.now()}`;
+    const botMessage: Message = {
+      id: Date.now() + 1,
+      text: '',
+      sender: 'bot',
+      timestamp: new Date().toLocaleTimeString('ko-KR'),
+      streamTargetId,
+    };
+
+    setMessages((prev) => [botMessage, ...prev]);
+
     try {
       // 백엔드 API 호출 (스트리밍)
       const response = await fetch('/ch3/stream', {
@@ -42,25 +53,42 @@ const AdvisorStream = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // 스트리밍 응답 처리
-      const responseText = await response.text();
-      const botMessage: Message = {
-        id: Date.now() + 1,
-        text: responseText,
-        sender: 'bot',
-        timestamp: new Date().toLocaleTimeString('ko-KR'),
-      };
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder('utf-8');
 
-      setMessages((prev) => [botMessage, ...prev]);
+      if (reader) {
+        let fullText = '';
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value, { stream: true });
+          fullText += chunk;
+
+          // 실시간으로 DOM에 텍스트 추가
+          const target = streamTargetRef.current[streamTargetId];
+          if (target) {
+            target.textContent = fullText;
+          }
+        }
+
+        // 스트리밍 완료 후 메시지 업데이트
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.streamTargetId === streamTargetId
+              ? { ...msg, text: fullText }
+              : msg
+          )
+        );
+      }
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
-        id: Date.now() + 1,
+        id: Date.now() + 2,
         text: '오류가 발생했습니다. 나중에 다시 시도해주세요.',
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
       };
-      setMessages((prev) => [errorMessage, ...prev]);
+      setMessages((prev) => [errorMessage, ...prev.filter((msg) => msg.streamTargetId !== streamTargetId)]);
     } finally {
       setLoading(false);
     }
