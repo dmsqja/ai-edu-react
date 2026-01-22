@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ChatUI from '../../components/ChatUI';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -29,20 +30,13 @@ const ChatFewShot = () => {
 
     try {
       // 백엔드 API 호출
-      const response = await fetch('/ch1/few', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch1/few',
+        new URLSearchParams({ prompt: userMessage.text }),
+        {
           'Accept': 'text/plain',
-        },
-        body: new URLSearchParams({ prompt: userMessage.text }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const responseText = await response.text();
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now() + 1,

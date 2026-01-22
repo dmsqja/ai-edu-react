@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ChatUI from '../../components/ChatUI';
-import apiClient from '../../api/client';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -29,16 +29,13 @@ const ChatPgvector = () => {
     setQuestion('');
 
     try {
-      const response = await apiClient.post('/ch7/chat-pgvector',
+      const responseText = await postRequest(
+        '/ch7/chat-pgvector',
         new URLSearchParams({ prompt: userMessage.text }),
         {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/x-ndjson',
-          },
+          'Accept': 'application/x-ndjson',
         }
       );
-      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now() + 1,
@@ -66,13 +63,13 @@ const ChatPgvector = () => {
     setLoading(true);
     try {
       const url = deleteAll ? '/ch7/delete-all-chat-pgvector' : '/ch7/delete-chat-pgvector';
-      const response = await apiClient.post(url, null, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        url,
+        new URLSearchParams(),
+        {
           'Accept': 'text/plain',
-        },
-      });
-      const responseText = response.data;
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now(),

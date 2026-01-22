@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -31,20 +32,13 @@ const PromptTemplate = () => {
 
     try {
       // 백엔드 API 호출
-      const response = await fetch('/ch2/prompt-template', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch2/prompt-template',
+        new URLSearchParams({ location, content, language }),
+        {
           'Accept': 'text/plain',
-        },
-        body: new URLSearchParams({ location, content, language }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const responseText = await response.text();
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now() + 1,

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -76,19 +77,13 @@ const AccessSystem = () => {
           const formData = new FormData();
           formData.append('attach', blob, `snapshot_${Date.now()}.jpg`);
 
-          const response = await fetch('/ch6/access-system', {
-            method: 'POST',
-            headers: {
+          const responseText = await postRequest(
+            '/ch6/access-system',
+            formData,
+            {
               'Accept': 'text/plain',
-            },
-            body: formData,
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const responseText = await response.text();
+            }
+          );
 
           const botMessage: Message = {
             id: Date.now() + 1,

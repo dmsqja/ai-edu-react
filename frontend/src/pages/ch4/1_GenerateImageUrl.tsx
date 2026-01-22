@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -29,20 +30,13 @@ const GenerateImageUrl = () => {
 
     try {
       // 백엔드 API 호출
-      const response = await fetch('/ch4/generate-image-url', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const imageUrl = await postRequest(
+        '/ch4/generate-image-url',
+        new URLSearchParams({ prompt: userMessage.text }),
+        {
           'Accept': 'text/plain',
-        },
-        body: new URLSearchParams({ prompt: userMessage.text }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const imageUrl = await response.text();
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now() + 1,

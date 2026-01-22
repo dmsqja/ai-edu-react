@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { streamRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -119,42 +120,26 @@ const VideoAnalysis = () => {
       formData.append('question', userMessage.text);
       formData.append('attach', blob, `snapshot_${Date.now()}.jpg`);
       
-      const response = await fetch('/ch4/image-analysis', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder('utf-8');
-
-      if (reader) {
-        let fullText = '';
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          fullText += chunk;
-
+      const fullText = await streamRequest(
+        '/ch4/image-analysis',
+        formData,
+        (text) => {
           // 실시간으로 DOM에 텍스트 추가
           const target = streamTargetRef.current[streamTargetId];
           if (target) {
-            target.textContent = fullText;
+            target.textContent = text;
           }
         }
+      );
 
-        // 스트리밍 완료 후 메시지 업데이트
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.streamTargetId === streamTargetId
-              ? { ...msg, text: fullText }
-              : msg
-          )
-        );
-      }
+      // 스트리밍 완료 후 메시지 업데이트
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.streamTargetId === streamTargetId
+            ? { ...msg, text: fullText }
+            : msg
+        )
+      );
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {

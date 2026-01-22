@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import apiClient from '../../api/client';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -23,12 +23,13 @@ const EtlPipeline = () => {
       const formData = new FormData();
       formData.append('type', type);
       formData.append('attach', file);
-      const response = await apiClient.post('/ch8/add-vector-store', formData, {
-        headers: {
+      const responseText = await postRequest(
+        '/ch8/add-vector-store',
+        formData,
+        {
           'Accept': 'text/plain',
-        },
-      });
-      const responseText = response.data;
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now(),
@@ -56,13 +57,13 @@ const EtlPipeline = () => {
   const deleteData = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.post('/ch8/clear-vector-store', new URLSearchParams({ type: type }), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch8/clear-vector-store',
+        new URLSearchParams({ type: type }),
+        {
           'Accept': 'text/plain',
-        },
-      });
-      const responseText = response.data;
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now(),

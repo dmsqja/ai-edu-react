@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ChatUI from '../../components/ChatUI';
-import apiClient from '../../api/client';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -29,16 +29,13 @@ const McpWebmvcChat = () => {
     setQuestion('');
 
     try {
-      const response = await apiClient.post('/ch9/weather',
+      const responseText = await postRequest(
+        '/ch9/weather',
         new URLSearchParams({ prompt: userMessage.text }),
         {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'text/plain',
-          },
+          'Accept': 'text/plain',
         }
       );
-      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now() + 1,

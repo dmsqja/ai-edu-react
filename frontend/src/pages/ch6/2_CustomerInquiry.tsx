@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -30,25 +31,19 @@ const CustomerInquiry = () => {
     try {
       // 백엔드 API 호출
       const url = responseType === 'json' ? '/ch6/customer-inquiry-json' : '/ch6/customer-inquiry-string';
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        url,
+        new URLSearchParams({ prompt: userMessage.text }),
+        {
           'Accept': 'application/json',
-        },
-        body: new URLSearchParams({ prompt: userMessage.text }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const responseText = JSON.stringify(data, null, 2);
+        }
+      );
+      const data = JSON.parse(responseText);
+      const formattedText = JSON.stringify(data, null, 2);
 
       const botMessage: Message = {
         id: Date.now() + 1,
-        text: responseText,
+        text: formattedText,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
       };

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ChatUI from '../../components/ChatUI';
+import { streamRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -28,25 +29,16 @@ const McpWebmvcChatStream = () => {
     setQuestion('');
 
     try {
-      const response = await fetch('/ch9/weather-stream', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      // 실시간 스트리밍을 위해서는 ChatUI가 아닌 커스텀 UI를 사용해야 하지만,
+      // 현재는 간단하게 전체 응답을 받아서 표시
+      const responseText = await streamRequest(
+        '/ch9/weather-stream',
+        new URLSearchParams({ prompt: userMessage.text }),
+        () => {}, // ChatUI에서는 실시간 업데이트 어려움
+        {
           'Accept': 'application/x-ndjson',
-        },
-        body: new URLSearchParams({ prompt: userMessage.text }),
-      });
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder('utf-8');
-      let responseText = '';
-      if (reader) {
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value);
-          responseText += chunk;
         }
-      }
+      );
 
       const botMessage: Message = {
         id: Date.now() + 1,

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -29,20 +30,13 @@ const Recommendation = () => {
 
     try {
       // 백엔드 API 호출
-      const response = await fetch('/ch6/recommendation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch6/recommendation',
+        new URLSearchParams({ prompt: userMessage.text, user_id: userId }),
+        {
           'Accept': 'text/plain',
-        },
-        body: new URLSearchParams({ prompt: userMessage.text, user_id: userId }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const responseText = await response.text();
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now() + 1,

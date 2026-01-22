@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -28,20 +29,13 @@ const DateTime = () => {
 
     try {
       // 백엔드 API 호출
-      const response = await fetch('/ch6/data-time', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch6/data-time',
+        new URLSearchParams({ prompt: userMessage.text }),
+        {
           'Accept': 'text/plain',
-        },
-        body: new URLSearchParams({ prompt: userMessage.text }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const responseText = await response.text();
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now() + 1,

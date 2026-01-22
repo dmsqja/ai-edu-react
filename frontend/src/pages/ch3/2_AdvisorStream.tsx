@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { streamRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -41,45 +42,26 @@ const AdvisorStream = () => {
 
     try {
       // 백엔드 API 호출 (스트리밍)
-      const response = await fetch('/ch3/stream', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({ prompt: userMessage.text }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder('utf-8');
-
-      if (reader) {
-        let fullText = '';
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          fullText += chunk;
-
+      const fullText = await streamRequest(
+        '/ch3/stream',
+        new URLSearchParams({ prompt: userMessage.text }),
+        (text) => {
           // 실시간으로 DOM에 텍스트 추가
           const target = streamTargetRef.current[streamTargetId];
           if (target) {
-            target.textContent = fullText;
+            target.textContent = text;
           }
         }
+      );
 
-        // 스트리밍 완료 후 메시지 업데이트
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.streamTargetId === streamTargetId
-              ? { ...msg, text: fullText }
-              : msg
-          )
-        );
-      }
+      // 스트리밍 완료 후 메시지 업데이트
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.streamTargetId === streamTargetId
+            ? { ...msg, text: fullText }
+            : msg
+        )
+      );
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import apiClient from '../../api/client';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -31,16 +31,13 @@ const HotelEmbedding = () => {
     setQuestion('');
 
     try {
-      const response = await apiClient.post('/ch7/hotel-embedding',
+      const responseText = await postRequest(
+        '/ch7/hotel-embedding',
         new URLSearchParams({ prompt: question, section: section, name: name }),
         {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'text/plain',
-          },
+          'Accept': 'text/plain',
         }
       );
-      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now() + 1,
@@ -67,13 +64,13 @@ const HotelEmbedding = () => {
   const addHotels = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.post('/ch7/add-hotels', null, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch7/add-hotels',
+        new URLSearchParams(),
+        {
           'Accept': 'text/plain',
-        },
-      });
-      const responseText = response.data;
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now(),
@@ -93,13 +90,13 @@ const HotelEmbedding = () => {
   const deleteHotels = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.post('/ch7/delete-hotels', null, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch7/delete-hotels',
+        new URLSearchParams(),
+        {
           'Accept': 'text/plain',
-        },
-      });
-      const responseText = response.data;
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now(),

@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -63,19 +64,14 @@ const SpeechToTextChatVoice = () => {
       const formData = new FormData();
       formData.append('attach', blob, 'speech.mp3');
 
-      const response = await fetch('/ch5/speech-to-text-chat-voice', {
-        method: 'POST',
-        headers: {
+      const responseText = await postRequest(
+        '/ch5/speech-to-text-chat-voice',
+        formData,
+        {
           'Accept': 'application/json',
-        },
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const responseJson = await response.json();
+        }
+      );
+      const responseJson = JSON.parse(responseText);
       const botMessage: Message = {
         id: Date.now() + 1,
         sender: 'bot',

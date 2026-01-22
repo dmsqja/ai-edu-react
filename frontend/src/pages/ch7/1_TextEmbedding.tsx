@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import apiClient from '../../api/client';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -28,16 +28,13 @@ const TextEmbedding = () => {
     setQuestion('');
 
     try {
-      const response = await apiClient.post('/ch7/text-embedding',
+      const responseText = await postRequest(
+        '/ch7/text-embedding',
         new URLSearchParams({ prompt: userMessage.text }),
         {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'text/plain',
-          },
+          'Accept': 'text/plain',
         }
       );
-      const responseText = response.data;
 
       const botMessage: Message = {
         id: Date.now() + 1,
@@ -64,13 +61,13 @@ const TextEmbedding = () => {
   const addTexts = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.post('/ch7/add-texts', null, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch7/add-texts',
+        new URLSearchParams(),
+        {
           'Accept': 'text/plain',
-        },
-      });
-      const responseText = response.data;
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now(),
@@ -90,13 +87,13 @@ const TextEmbedding = () => {
   const deleteTexts = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.post('/ch7/delete-texts', null, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch7/delete-texts',
+        new URLSearchParams(),
+        {
           'Accept': 'text/plain',
-        },
-      });
-      const responseText = response.data;
+        }
+      );
 
       const botMessage: Message = {
         id: Date.now(),

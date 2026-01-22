@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { postBlobRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -29,22 +30,14 @@ const TextToSpeechChatStream = () => {
     setQuestion('');
 
     try {
-      // 백엔드 API 호출 (스트리밍)
-      const response = await fetch('/ch5/text-to-speech-chat-stream', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      // 백엔드 API 호출 (스트리밍 오디오)
+      const audioBlob = await postBlobRequest(
+        '/ch5/text-to-speech-chat-stream',
+        new URLSearchParams({ prompt: userMessage.text || '' }),
+        {
           'Accept': 'application/octet-stream',
-        },
-        body: new URLSearchParams({ prompt: userMessage.text || '' }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // 스트리밍 오디오를 Blob으로 변환
-      const audioBlob = await response.blob();
+        }
+      );
       const audioUrl = URL.createObjectURL(audioBlob);
       
       const botMessage: Message = {

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -31,25 +32,19 @@ const ParameterizedTypeReference = () => {
 
     try {
       // 백엔드 API 호출
-      const response = await fetch('/ch2/parameterized-type-reference', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch2/parameterized-type-reference',
+        new URLSearchParams({ location, content, language }),
+        {
           'Accept': 'application/json',
-        },
-        body: new URLSearchParams({ location, content, language }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const responseText = JSON.stringify(data, null, 2);
+        }
+      );
+      const data = JSON.parse(responseText);
+      const formattedText = JSON.stringify(data, null, 2);
 
       const botMessage: Message = {
         id: Date.now() + 1,
-        text: responseText,
+        text: formattedText,
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString('ko-KR'),
       };

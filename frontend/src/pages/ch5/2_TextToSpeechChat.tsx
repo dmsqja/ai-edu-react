@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { postRequest } from '../../api/client';
 
 interface Message {
   id: number;
@@ -29,20 +30,14 @@ const TextToSpeechChat = () => {
 
     try {
       // 백엔드 API 호출
-      const response = await fetch('/ch5/text-to-speech-chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const responseText = await postRequest(
+        '/ch5/text-to-speech-chat',
+        new URLSearchParams({ prompt: userMessage.text || '' }),
+        {
           'Accept': 'application/json',
-        },
-        body: new URLSearchParams({ prompt: userMessage.text || '' }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const responseJson = await response.json();
+        }
+      );
+      const responseJson = JSON.parse(responseText);
       const audioBase64 = responseJson.audio;
 
       const botMessage: Message = {
